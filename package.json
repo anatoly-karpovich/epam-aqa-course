@@ -11,7 +11,8 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.ts"
+    "wdio": "wdio run ./wdio.conf.ts",
+    "build": "npx tsc"
   },
   "dependencies": {
     "@types/dotenv": "^8.2.0",
