@@ -1,6 +1,6 @@
 class CommonSteps {
-    async openReportPortal(port?: number) {
-        await browser.url(`http://localhost:${port || process.env.PORT}/ui/#login`)
+    async openReportPortal() {
+        await browser.url(process.env.ENVIRONMENT === "local" ? `http://localhost:${process.env.PORT || 8080}/ui/#login` : `https://rp.epam.com/ui/#login`)
     }    
 }
 

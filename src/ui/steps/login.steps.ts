@@ -4,8 +4,10 @@ import LoginPage from "../pages/login.page.js";
 
 class LoginSteps {
     async login(credentials?: ICredentials) {
-        await LoginPage.setValue(LoginPage["Login input"], credentials?.login || process.env!.LOGIN || "")
-        await LoginPage.setValue(LoginPage["Password input"], credentials?.password || process.env.PASSWORD || "")
+        const login = process.env.ENVIRONMENT === "local" ? process.env.LOGIN_LOCAL : process.env.LOGIN_WEB
+        const password = process.env.ENVIRONMENT === "local" ? process.env.PASSWORD_LOCAL : process.env.PASSWORD_WEB
+        await LoginPage.setValue(LoginPage["Login input"], credentials?.login || login || "")
+        await LoginPage.setValue(LoginPage["Password input"], credentials?.password || password || "")
         await LoginPage.click(LoginPage["Login button"])
         await AllDashboardsPage.waitForElement(AllDashboardsPage["Signed message"])
     }
