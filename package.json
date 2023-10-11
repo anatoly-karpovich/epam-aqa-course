@@ -2,6 +2,9 @@
   "name": "my-new-project",
   "type": "module",
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/rimraf": "^4.0.5",
+    "@types/winston": "^2.4.4",
     "@wdio/allure-reporter": "^8.17.0",
     "@wdio/cli": "^8.17.0",
     "@wdio/local-runner": "^8.17.0",
@@ -11,12 +14,15 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.ts",
-    "build": "npx tsc"
+    "wdio": "wdio run ./src/config/wdio.conf.ts",
+    "build": "rimraf dist && npx tsc",
+    "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",
+    "report-open": "allure open src/report/allure-report"
   },
   "dependencies": {
-    "@types/dotenv": "^8.2.0",
     "allure-commandline": "^2.24.1",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "rimraf": "^5.0.5",
+    "winston": "^3.11.0"
   }
 }
