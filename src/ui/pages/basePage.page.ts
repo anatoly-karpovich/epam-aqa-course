@@ -110,7 +110,8 @@ export class BasePage {
       await browser.url(url);
       Logger.log(`Successfully opened url: ${url}`)
     } catch (error) {
-      Logger.log(`Failed to opened url: ${url}`, 'error')
+      Logger.log(`Failed to opened url: ${url}`, 'error');
+      throw error
     }
   }
 }
