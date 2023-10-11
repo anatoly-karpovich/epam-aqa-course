@@ -15,5 +15,3 @@ class AddNewDashboardModal extends DashboardsModal {
 }
 
 export default new AddNewDashboardModal("Add New Dashboard")
-
-console.log(new AddNewDashboardModal("Add New Dashboard")["Add button"])

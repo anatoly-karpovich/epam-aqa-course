@@ -1,8 +1,10 @@
-import { ICredentials } from "../../types/login.types.js";
+import type { ICredentials } from "../../types/login.types.js";
+import { logStep } from "../../utils/reporter/reporter.js";
 import AllDashboardsPage from "../pages/dashboards/allDashboards.page.js";
 import LoginPage from "../pages/login.page.js";
 
 class LoginSteps {
+    @logStep("Login")
     async login(credentials?: ICredentials) {
         const login = process.env.ENVIRONMENT === "local" ? process.env.LOGIN_LOCAL : process.env.LOGIN_WEB
         const password = process.env.ENVIRONMENT === "local" ? process.env.PASSWORD_LOCAL : process.env.PASSWORD_WEB
