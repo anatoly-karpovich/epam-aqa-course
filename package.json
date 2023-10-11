@@ -3,6 +3,7 @@
   "type": "module",
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
+    "@types/lodash": "^4.14.199",
     "@types/rimraf": "^4.0.5",
     "@types/winston": "^2.4.4",
     "@wdio/allure-reporter": "^8.17.0",
@@ -22,6 +23,7 @@
   "dependencies": {
     "allure-commandline": "^2.24.1",
     "dotenv": "^16.3.1",
+    "lodash": "^4.17.21",
     "rimraf": "^5.0.5",
     "winston": "^3.11.0"
   }

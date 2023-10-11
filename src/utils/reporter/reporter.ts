@@ -16,3 +16,7 @@ export function logStep(stepName: string): MethodDecorator {
         return descriptor;
       };
   }
+
+  export function attachLog(log: string) {
+    allure.addAttachment('Test Log', log, 'text/plain');
+  }

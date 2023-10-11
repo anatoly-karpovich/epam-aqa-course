@@ -1,4 +1,4 @@
-import { logStep } from "../../utils/reporter/logStep.js";
+import { logStep } from "../../utils/reporter/reporter.js";
 import AllDashboardsPage from "../pages/dashboards/allDashboards.page.js";
 import AddNewDashboardModal from "../pages/dashboards/modals/addNewDashboard.modal.js";
 

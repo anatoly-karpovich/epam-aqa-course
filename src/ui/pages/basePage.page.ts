@@ -1,4 +1,4 @@
-import { logger } from "../../utils/logger/logger.js";
+import Logger from "../../utils/logger/logger.js";
 import { DEFAULT_TIMEOUT } from "../../utils/timeouts/timeouts.js";
 
 export class BasePage {
@@ -31,10 +31,10 @@ export class BasePage {
       const element = await this.waitForElement(selector, false, timeout);
       await element.waitForExist({ timeout });
       await element.scrollIntoView({ block: "center" });
-      logger.info(`Successfully scrolled to element with selector ${selector}`);
+      Logger.log(`Successfully scrolled to element with selector ${selector}`);
       return element;
     } catch (error) {
-      logger.error(`Error scrolling to element with selector ${selector}`);
+      Logger.log(`Failed to scroll to element with selector ${selector}`, 'error');
       throw error
     }
   }
@@ -44,12 +44,12 @@ export class BasePage {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.click();
-        logger.info(
+        Logger.log(
           `Successfully clicked on element with selector ${selector}`
         );
       }
     } catch (error) {
-      logger.error(`Error clicking on element with selector ${selector}`);
+      Logger.log(`Failed to click on element with selector ${selector}`, 'error');
       throw error
     }
   }
@@ -59,13 +59,13 @@ export class BasePage {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.setValue(text);
-        logger.info(
+        Logger.log(
           `Successfully set "${text}" into element with selector ${selector}`
         );
       }
     } catch (error) {
-      logger.error(
-        `Error setting "${text}" into element with selector ${selector}`
+      Logger.log(
+        `Failed to set "${text}" into element with selector ${selector}`, 'error'
       );
       throw error
     }
@@ -76,13 +76,13 @@ export class BasePage {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.addValue(text);
-        logger.info(
+        Logger.log(
           `Successfully added "${text}" into element with selector ${selector}`
         );
       }
     } catch (error) {
-      logger.error(
-        `Error adding "${text}" into element with selector ${selector}`
+      Logger.log(
+        `Failed to add "${text}" into element with selector ${selector}`, 'error'
       );
       throw error
     }
@@ -93,15 +93,24 @@ export class BasePage {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.clearValue();
-        logger.info(
+        Logger.log(
           `Successfully cleared value from element with selector ${selector}`
         );
       }
     } catch (error) {
-      logger.error(
-        `Error crealing value from element with selector ${selector}`
+      Logger.log(
+        `Failed to clear value from element with selector ${selector}`, 'error'
       );
       throw error
+    }
+  }
+
+  async openPage(url: string) {
+    try {
+      await browser.url(url);
+      Logger.log(`Successfully opened url: ${url}`)
+    } catch (error) {
+      Logger.log(`Failed to opened url: ${url}`, 'error')
     }
   }
 }
