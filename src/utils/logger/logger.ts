@@ -1,6 +1,6 @@
 import * as winston from "winston";
 import _ from "lodash";
-import { attachLog } from "../reporter/reporter";
+import { attachLog } from "../reporter/reporter.js";
 
 type logLevels = "info" | "error";
 
@@ -37,6 +37,10 @@ class Logger {
   sendLogsToReport() {
     const log = this.logArray.join("\n");
     attachLog(log);
+    this.clearLog();
+  }
+
+  clearLog() {
     _.remove(this.logArray);
   }
 }

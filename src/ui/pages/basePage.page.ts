@@ -1,4 +1,5 @@
 import Logger from "../../utils/logger/logger.js";
+import { logStep } from "../../utils/reporter/reporter.js";
 import { DEFAULT_TIMEOUT } from "../../utils/timeouts/timeouts.js";
 
 export class BasePage {
@@ -38,70 +39,59 @@ export class BasePage {
       throw error
     }
   }
-
+  @logStep("Click on element with selector ${selector}")
   async click(selector: string, timeout?: number) {
     try {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.click();
-        Logger.log(
-          `Successfully clicked on element with selector ${selector}`
-        );
+        Logger.log(`Successfully clicked on element with selector ${selector}`);
       }
     } catch (error) {
-      Logger.log(`Failed to click on element with selector ${selector}`, 'error');
-      throw error
+      Logger.log(`Failed to click on element with selector ${selector}`, "error");
+      throw error;
     }
   }
 
+  @logStep("Set {text} into element with selector {selector}")
   async setValue(selector: string, text: string, timeout?: number) {
     try {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.setValue(text);
-        Logger.log(
-          `Successfully set "${text}" into element with selector ${selector}`
-        );
+        Logger.log(`Successfully set "${text}" into element with selector ${selector}`);
       }
     } catch (error) {
-      Logger.log(
-        `Failed to set "${text}" into element with selector ${selector}`, 'error'
-      );
-      throw error
+      Logger.log(`Failed to set "${text}" into element with selector ${selector}`, "error");
+      throw error;
     }
   }
 
+  @logStep("Add {text} into element with selector {selector}")
   async addValue(selector: string, text: string, timeout?: number) {
     try {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.addValue(text);
-        Logger.log(
-          `Successfully added "${text}" into element with selector ${selector}`
-        );
+        Logger.log(`Successfully added "${text}" into element with selector ${selector}`);
       }
     } catch (error) {
-      Logger.log(
-        `Failed to add "${text}" into element with selector ${selector}`, 'error'
-      );
-      throw error
+      Logger.log(`Failed to add "${text}" into element with selector ${selector}`, "error");
+      throw error;
     }
   }
 
+  @logStep("Clear value from element with selector {selector}")
   async clear(selector: string, timeout?: number) {
     try {
       const element = await this.waitForElementAndScroll(selector, timeout);
       if (element) {
         await element.clearValue();
-        Logger.log(
-          `Successfully cleared value from element with selector ${selector}`
-        );
+        Logger.log(`Successfully cleared value from element with selector ${selector}`);
       }
     } catch (error) {
-      Logger.log(
-        `Failed to clear value from element with selector ${selector}`, 'error'
-      );
-      throw error
+      Logger.log(`Failed to clear value from element with selector ${selector}`, "error");
+      throw error;
     }
   }
 

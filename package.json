@@ -15,7 +15,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "wdio": "wdio run ./src/config/wdio.conf.ts",
+    "wdio": "npm run build && wdio run ./dist/config/wdio.conf.js",
     "build": "rimraf dist && npx tsc",
     "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",
     "report-open": "allure open src/report/allure-report"
