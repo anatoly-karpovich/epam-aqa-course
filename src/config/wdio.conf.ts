@@ -1,6 +1,7 @@
 import type { Options } from '@wdio/types'
 import * as dotenv from "dotenv"
 import * as rimraf from 'rimraf';
+import Logger from '../utils/logger/logger.js';
 
 dotenv.config()
 
@@ -37,7 +38,7 @@ export const config: Options.Testrunner = {
     //
     specs: [
         // ToDo: define location for spec files here
-        "../**/*.test.ts"
+        "../**/*.test.js"
     ],
     // Patterns to exclude.
     exclude: [
@@ -250,8 +251,9 @@ export const config: Options.Testrunner = {
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
     afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+        Logger.sendLogsToReport();
         if (!passed) {
-            await browser.takeScreenshot();
+          await browser.takeScreenshot();
         }
     },
 

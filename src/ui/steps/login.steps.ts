@@ -4,7 +4,7 @@ import AllDashboardsPage from "../pages/dashboards/allDashboards.page.js";
 import LoginPage from "../pages/login.page.js";
 
 class LoginSteps {
-    @logStep("Login")
+    @logStep("Login to Report Portal")
     async login(credentials?: ICredentials) {
         const login = process.env.ENVIRONMENT === "local" ? process.env.LOGIN_LOCAL : process.env.LOGIN_WEB
         const password = process.env.ENVIRONMENT === "local" ? process.env.PASSWORD_LOCAL : process.env.PASSWORD_WEB
@@ -15,4 +15,4 @@ class LoginSteps {
     }
 }
 
-export default new LoginSteps()
+export default new LoginSteps();
