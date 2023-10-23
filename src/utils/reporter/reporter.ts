@@ -1,5 +1,6 @@
 import allure from "@wdio/allure-reporter";
 import { Status } from "allure-js-commons";
+import { hideSecretData } from "../strings/index.js";
 
 export function logStep(stepName: string): MethodDecorator {
   return function (
@@ -11,9 +12,11 @@ export function logStep(stepName: string): MethodDecorator {
     descriptor.value = async function (...args: any[]) {
       const selector = args[0]; // Extract the selector from the arguments
       const value = args[1]; // Extract the value from the arguments
+      const isSecretArgument = args.find(el => typeof el === 'object' && 'isSecretValue' in el);
+      const isSecretValue = isSecretArgument ? isSecretArgument.isSecretValue : false
       let newStepName = stepName
         .replace("{selector}", `"${selector}"`)
-        .replace("{text}", `"${value}"`);
+        .replace("{text}", `"${isSecretValue ? hideSecretData(value) : value}"`);
       allure.startStep(newStepName);
       try {
         const result = await originalMethod.apply(this, args);

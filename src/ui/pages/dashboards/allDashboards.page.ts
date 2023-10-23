@@ -5,10 +5,6 @@ class AllDashboardsPage extends DashboardsPage {
         return `span[title="All Dashboards"]`
     }
 
-    get ["Signed message"]() {
-        return `//p[.="Signed in successfully"]`
-    }
-
     get ["Search input"]() {
         return `input[placeholder="Search by name"]`
     }
