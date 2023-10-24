@@ -1,11 +1,11 @@
 import { logStep } from "../../utils/reporter/reporter.js"
 import LoginPage from "../pages/login.page.js"
-import config from "../../config/config.js"
+import conf from "../../config/config.js"
 
 class CommonSteps {
     @logStep("Open Report Portal")
     async openReportPortal() {
-        await LoginPage.openPage(config.baseUrl)
+        await LoginPage.openPage(conf.baseUrl)
     }
     
     async skipNotificationMessage(message?: string) {
