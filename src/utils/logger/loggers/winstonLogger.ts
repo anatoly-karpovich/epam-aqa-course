@@ -1,30 +1,23 @@
 import * as winston from "winston";
 import _ from "lodash";
-import { attachLog } from "../reporter/reporter.js";
+import { attachLog } from "../../reporter/reporter.js";
+import { Logger } from "./baseLogger.js";
 
 type logLevels = "info" | "error";
 
-class Logger {
-  private logArray: string[] = [];
-  private static instance: Logger;
+class WinstonLogger extends Logger {
+  constructor() {
+    super();
+  }
   private logger = winston.createLogger({
     level: "info",
     format: winston.format.combine(
       winston.format.colorize(),
       winston.format.timestamp(),
-      winston.format.printf(
-        ({ timestamp, level, message }) => `${timestamp} [${level}]: ${message}`
-      )
+      winston.format.printf(({ timestamp, level, message }) => `${timestamp} [${level}]: ${message}`)
     ),
     transports: [new winston.transports.Console()],
   });
-
-  constructor() {
-    if (Logger.instance) {
-      return Logger.instance;
-    }
-    Logger.instance = this;
-  }
 
   log(message: string, level: logLevels = "info") {
     const logEntry = `${new Date().toISOString()} [${level.toUpperCase()}]: ${message}`;
@@ -45,4 +38,4 @@ class Logger {
   }
 }
 
-export default new Logger();
+export default new WinstonLogger();
