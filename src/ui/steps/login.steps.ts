@@ -10,7 +10,7 @@ class LoginSteps {
     await LoginPage.setValue(LoginPage["Login input"], credentials?.login || conf.credentials.login);
     await LoginPage.setValue(LoginPage["Password input"], credentials?.password || conf.credentials.password, { isSecretValue: true });
     await LoginPage.click(LoginPage["Login button"]);
-    await LoginPage.checkNotificationWithText(NOTIFICATION_MESSAGES.SIGNED_IN)
+    await LoginPage.checkNotificationWithText(NOTIFICATION_MESSAGES.SIGNED_IN);
   }
 }
 

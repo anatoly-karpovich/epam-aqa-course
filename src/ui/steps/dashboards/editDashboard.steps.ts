@@ -4,7 +4,7 @@ import EditDashboardModal from "../../pages/dashboards/modals/editDashboard.moda
 
 class EditDashboardSteps {
     
-    @logStep('Fill In Dashboards Data on Edit Dashboards modal')
+  @logStep('Fill In Dashboards Data on Edit Dashboards modal')
   async fillInDashboardData(newDashboard: INewDashboardUI) {
     await EditDashboardModal.setValue(EditDashboardModal["Dashboard Name input"], newDashboard.name);
     if (newDashboard.description) {

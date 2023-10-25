@@ -23,10 +23,10 @@ describe("Edit Dashboard", () => {
     dashboard = generateNewDashboard();
     await EditDashboardSteps.updateDashboard(dashboard);
     const pageTitle = await DashboardDetailsPage.getText(DashboardDetailsPage.Title);
-    expect(pageTitle).toBe(dashboard.name.toUpperCase())
+    expect(pageTitle).toBe(dashboard.name.toUpperCase());
   });
 
   afterEach(async () => {
     await SidebarSteps.logout();
-  })
+  });
 });

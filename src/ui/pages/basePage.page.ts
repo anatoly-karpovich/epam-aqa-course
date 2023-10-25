@@ -3,19 +3,16 @@ import { logStep } from "../../utils/reporter/reporter.js";
 import { hideSecretData } from "../../utils/strings/index.js";
 import { DEFAULT_TIMEOUT } from "../../utils/timeouts/timeouts.js";
 
-const Logger = LoggerWrapper.getLogger()
+const Logger = LoggerWrapper.getLogger();
 
 type SetValueContext = {
   isSecretValue: boolean;
 };
 
 export class BasePage {
-
-  
-  get ['Notification message']() {
-    return (notificationText?: string) => notificationText ? `//div[@id="notification-root"]//p[text()="${notificationText}"]` : `div#notification-root p`
+  get ["Notification message"]() {
+    return (notificationText?: string) => (notificationText ? `//div[@id="notification-root"]//p[text()="${notificationText}"]` : `div#notification-root p`);
   }
-
 
   async findElement(selector: string) {
     const element = await $(selector);
@@ -108,7 +105,7 @@ export class BasePage {
   async getText(selector: string, timeout?: number) {
     const element = await this.waitForElementAndScroll(selector, timeout);
     const text = await element.getText();
-    return text
+    return text;
   }
 
   async openPage(url: string) {
@@ -123,17 +120,17 @@ export class BasePage {
 
   async checkNotificationWithText(text: string) {
     return await browser.waitUntil(async () => {
-      const notifications = await this.findElementArray(this["Notification message"]())
-      let expectedNotification: WebdriverIO.Element | undefined
-      for(const n of notifications) {
+      const notifications = await this.findElementArray(this["Notification message"]());
+      let expectedNotification: WebdriverIO.Element | undefined;
+      for (const n of notifications) {
         let actualText = await n.getText();
-        if(text === actualText) {
-          expectedNotification = n
-          n.click()
+        if (text === actualText) {
+          expectedNotification = n;
+          n.click();
         }
         break;
       }
-      return expectedNotification
-    })
+      return expectedNotification;
+    });
   }
 }

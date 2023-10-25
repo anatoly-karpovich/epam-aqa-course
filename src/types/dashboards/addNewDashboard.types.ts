@@ -1,4 +1,4 @@
 export interface INewDashboardUI {
-    name: string,
-    description?: string
+  name: string;
+  description?: string;
 }

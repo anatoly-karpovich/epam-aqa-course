@@ -21,8 +21,8 @@ describe("Delete Dashboard", () => {
     await DashboardDetailsSteps.openDeleteDashboardModal();
     await DeleteDashboardSteps.deleteDashboard();
   });
-  
+
   afterEach(async () => {
     await SidebarSteps.logout();
-  })
+  });
 });

@@ -7,9 +7,9 @@ import SidebarSteps from "../../steps/sidebar.steps.js";
 import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.js";
 
 describe("Create Dashboard", () => {
-    beforeEach(async () => {
-        await CommonSteps.openReportPortal();
-    })
+  beforeEach(async () => {
+    await CommonSteps.openReportPortal();
+  });
 
   it("Create dashboard with smoke data", async () => {
     await LoginSteps.login();
@@ -17,10 +17,10 @@ describe("Create Dashboard", () => {
     const dashboard = generateNewDashboard();
     await AddNewDashboardSteps.submitNewDashboard(dashboard);
     const pageTitle = await DashboardDetailsPage.getText(DashboardDetailsPage.Title);
-    expect(pageTitle).toBe(dashboard.name.toUpperCase())
+    expect(pageTitle).toBe(dashboard.name.toUpperCase());
   });
-  
+
   afterEach(async () => {
     await SidebarSteps.logout();
-  })
+  });
 });
