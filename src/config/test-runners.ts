@@ -1,4 +1,4 @@
-export const test_runners = {
+const test_runners = {
     mocha: {
         framework: 'mocha',
         mochaOpts: {
@@ -13,3 +13,5 @@ export const test_runners = {
         },
     }
 }
+
+export default test_runners[process.env.TEST_RUNNER || "mocha"]

@@ -1,11 +1,10 @@
 import type { Options } from '@wdio/types'
 import * as dotenv from "dotenv"
 import { hooks } from './wdio-hooks.js'
-import { test_runners } from './test-runners.js'
+import test_runner from './test-runners.js'
 
 
 dotenv.config()
-const runner = `${process.env.TEST_RUNNER}` || 'mocha'
 
 export const config: Options.Testrunner = {
     //
@@ -130,7 +129,7 @@ export const config: Options.Testrunner = {
     //
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
-    framework: 'mocha',
+    // framework: 'mocha',
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -150,7 +149,7 @@ export const config: Options.Testrunner = {
         disableWebdriverScreenshotsReporting: false,
         disableMochaHooks: true,
         reportedEnvironmentVars: {
-            test_runner: runner,
+            test_runner: test_runner.framework,
             environment: process.env.ENVIRONMENT
         }
     }]],
@@ -159,12 +158,8 @@ export const config: Options.Testrunner = {
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
-    mochaOpts: {
-        ui: 'bdd',
-        timeout: 60000
-    },
 
-     ...test_runners[runner],
+     ...test_runner,
 
     ...hooks,
 }
