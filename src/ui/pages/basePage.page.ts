@@ -26,7 +26,7 @@ export class BasePage {
 
   async waitForElement(selector: string, reverse = false, timeout = DEFAULT_TIMEOUT) {
     const element = await this.findElement(selector);
-    element.waitForDisplayed({
+    await element.waitForDisplayed({
       timeout,
       reverse,
       timeoutMsg: `Element with selector ${selector} was not found`,
@@ -126,7 +126,7 @@ export class BasePage {
         let actualText = await n.getText();
         if (text === actualText) {
           expectedNotification = n;
-          n.click();
+          await n.click();
         }
         break;
       }
