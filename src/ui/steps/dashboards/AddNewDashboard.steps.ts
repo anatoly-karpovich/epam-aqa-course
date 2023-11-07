@@ -2,6 +2,7 @@ import { NOTIFICATION_MESSAGES } from "../../../data/dashboards/dashboardsUi.js"
 import type { INewDashboardUI } from "../../../types/dashboards/addNewDashboard.types.js";
 import { logStep } from "../../../utils/reporter/reporter.js";
 import AddNewDashboardModal from "../../pages/dashboards/modals/addNewDashboard.modal.js";
+import CommonSteps from "../common.steps.js";
 
 class AddNewDashboardSteps {
   @logStep("Fill In Dashboards Data on Add Dashboards modal")
@@ -21,7 +22,7 @@ class AddNewDashboardSteps {
   async submitNewDashboard(newDashboard: INewDashboardUI) {
     await this.fillInNewDashboardData(newDashboard);
     await this.clickSaveButton();
-    await AddNewDashboardModal.checkNotificationWithText(NOTIFICATION_MESSAGES.DASHBOARD_ADDED);
+    await CommonSteps.skipNotificationMessage(NOTIFICATION_MESSAGES.DASHBOARD_ADDED);
   }
 }
 

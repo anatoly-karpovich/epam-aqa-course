@@ -3,8 +3,9 @@ import DeleteDashboardModal from "./modals/deleteDashboard.modal.js";
 import EditDashboardModal from "./modals/editDashboard.modal.js";
 
 class DashboardDetailsPage extends DashboardsPage {
-  editDashboardModal = EditDashboardModal;
-  deleteDashboardModal = DeleteDashboardModal;
+  "Edit Dashboard" = EditDashboardModal;
+  "Delete Dashboard" = DeleteDashboardModal;
+  uniqueElement = this.Title
 
   get ["Title"]() {
     return `ul li:last-child span`;

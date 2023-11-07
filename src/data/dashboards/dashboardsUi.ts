@@ -15,3 +15,7 @@ export enum NOTIFICATION_MESSAGES {
   SIGNED_IN = "Signed in successfully",
   DASHBOARD_DELETED = "Dashboard has been deleted",
 }
+
+export const DEMO_DASHBOARD_DATA = {
+  name: 'DEMO DASHBOARD'
+} as const

@@ -1,7 +1,10 @@
 import type { Options } from '@wdio/types'
 import * as dotenv from "dotenv"
-import { hooks } from './wdio-hooks.js'
+import hooks from './hooks/wdio-hooks.js'
 import test_runner from './test-runners.js'
+import reporters from './reporters.js'
+import suites from './specs/suites.js'
+import spec from './specs/spec.js'
 
 
 dotenv.config()
@@ -37,13 +40,10 @@ export const config: Options.Testrunner = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     //
-    specs: [
-        // ToDo: define location for spec files here
-        "../**/*.test.ts"
-    ],
-    suites: {
-        ui: ["../ui/**/*test.ts"]
-    },
+    // ToDo: define location for spec files here
+    specs: spec,
+
+    suites: suites,
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -81,7 +81,7 @@ export const config: Options.Testrunner = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: process.env.DEBUG === 'true' ? 'info' : 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -142,21 +142,7 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec',['allure', {
-        outputDir: './src/report/allure-results',
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: false,
-        disableMochaHooks: true,
-        reportedEnvironmentVars: {
-            test_runner: test_runner.framework,
-            environment: process.env.ENVIRONMENT
-        }
-    }]],
-
-    
-    //
-    // Options to be passed to Mocha.
-    // See the full list at http://mochajs.org/
+    reporters: reporters,
 
      ...test_runner,
 
