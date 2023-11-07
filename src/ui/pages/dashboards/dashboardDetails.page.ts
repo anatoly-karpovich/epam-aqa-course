@@ -18,6 +18,14 @@ class DashboardDetailsPage extends DashboardsPage {
   get ["Delete button"]() {
     return `//button[./span[.="Delete"]]`;
   }
+
+  get ["Widgets container"]() {
+    return `//div[@class="react-grid-layout"]`
+  }
+
+  get ["Widget by Name"]() {
+    return (widgetName: string) => `${this["Widget by Name"]}/div[.//*[.="${widgetName}"]]`
+  }
 }
 
 export default new DashboardDetailsPage();

@@ -1,4 +1,4 @@
-import { Then, When, After } from "@wdio/cucumber-framework";
+import { Then, When, After, DataTable } from "@wdio/cucumber-framework";
 import { DEMO_DASHBOARD_DATA, generateNewDashboard } from "../../../data/dashboards/dashboardsUi.js";
 import AddNewDashboardSteps from "../../steps/dashboards/AddNewDashboard.steps.js";
 import editDashboardSteps from "../../steps/dashboards/editDashboard.steps.js";
@@ -35,6 +35,13 @@ When(/^I open (created|demo) dashboard detals on "All Dashboards" page$/, async 
   dashboard === 'created'
   ? await allDashboardsPage.click(allDashboardsPage["Dashboard Name in table by Dashboard Name"](this.parameters.dashboard.name))
   : await allDashboardsPage.click(allDashboardsPage["Dashboard Name in table by Dashboard Name"](DEMO_DASHBOARD_DATA.name))
+})
+
+Then(/^I should see following widgets on "Dashboard Details" page:$/, async function(table: DataTable) {
+  const widgets = table.rows().flat();
+  for(const winget of widgets) {
+    await DashboardDetailsPage.waitForElementAndScroll(DashboardDetailsPage["Widget by Name"](winget))
+  }
 })
 
 After("not @login", async() => {

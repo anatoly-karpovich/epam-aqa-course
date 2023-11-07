@@ -15,7 +15,7 @@ export class BasePage {
   }
 
   get ["Spinner"]() {
-    return `div.spinningPreloader__spinning-preloader--iC5Pz`
+    return `div.spinningPreloader__spinning-preloader--iC5Pz`;
   }
 
   async findElement(selector: string) {
@@ -43,7 +43,7 @@ export class BasePage {
       const element = await this.waitForElement(selector, false, timeout);
       await element.waitForExist({ timeout });
       await element.scrollIntoView({ block: "center" });
-      await element.waitForClickable({ timeout })
+      await element.waitForClickable({ timeout });
       Logger.log(`Successfully scrolled to element with selector ${selector}`);
       return element;
     } catch (error) {
@@ -143,17 +143,25 @@ export class BasePage {
   }
 
   async waitForElementToChangeText(selector: string, text: string, timeout = DEFAULT_TIMEOUT) {
-    await browser.waitUntil(async () => {
-      const elementText = await this.getText(selector)
-      return elementText === text
-    }, {timeout, timeoutMsg: `Element still does not has text ${text}`})
+    await browser.waitUntil(
+      async () => {
+        const elementText = await this.getText(selector);
+        return elementText === text;
+      },
+      { timeout, timeoutMsg: `Element still does not has text ${text}` }
+    );
   }
 
-  async waitForEmenetsArrayToBeDisplayed(selector:string, reverse?: boolean, timeout = DEFAULT_TIMEOUT) {
-    const elements = await this.findElementArray(selector)
-    for(const element of elements) {
-      await element.waitForDisplayed({ timeout, reverse })
-    }
-    await Promise.all(elements)
+  async waitForEmenetsArrayToBeDisplayed(selector: string, reverse?: boolean, timeout = DEFAULT_TIMEOUT) {
+    await browser.waitUntil(
+      async () => {
+        const elements = await this.findElementArray(selector);
+        for (const element of elements) {
+          await element.waitForDisplayed({ timeout, reverse });
+        }
+        return true;
+      },
+      { timeout }
+    );
   }
 }
