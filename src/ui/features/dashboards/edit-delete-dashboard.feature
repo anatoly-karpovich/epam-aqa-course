@@ -10,7 +10,6 @@ Feature: Dashboards
         When I create new Dashboard on "Add New Dashboard" modal
         Then I should be on "Dashboard Details" page
 
-    @run
     Scenario: Delete Dashboard
         When I click on "Delete button" on "Dashboard Details" page
         Then I should be on "Delete Dashboard" modal on "Dashboard Details" page
