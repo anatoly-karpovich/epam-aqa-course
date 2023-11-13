@@ -65,7 +65,6 @@ const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
      */
     before: async function (capabilities, specs) {
         await browser.maximizeWindow();
-        await browser.deleteCookies()
         await CommonSteps.openReportPortal();
     },
     /**
