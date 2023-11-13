@@ -1,5 +1,12 @@
+const mocha_jasmine_spec = ["../**/*test.ts"];
+const mocha_jasmine_suites = { ui: ["../ui/**/*test.ts"] }
+const cucumber_spec = ["../**/*.feature"];
+const cucumber_suites = { ui: ["../ui/features/**/*.feature"] }
+
 const test_runners = {
     mocha: {
+        specs: mocha_jasmine_spec,
+        suites: mocha_jasmine_suites,
         framework: 'mocha',
         mochaOpts: {
             ui: 'bdd',
@@ -7,12 +14,16 @@ const test_runners = {
         },
     },
     jasmine: {
+        specs: mocha_jasmine_spec,
+        suites: mocha_jasmine_suites,
         framework: 'jasmine',
         jasmineOpts: {
             defaultTimeoutInterval: 60000,
         },
     },
     cucumber: {
+        specs: cucumber_spec,
+        suites: cucumber_suites,
         framework: "cucumber",
         cucumberOpts: {
             // <string[]> (file/dir) require files before executing features

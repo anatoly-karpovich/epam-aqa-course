@@ -24,7 +24,7 @@ class DashboardDetailsPage extends DashboardsPage {
   }
 
   get ["Widget by Name"]() {
-    return (widgetName: string) => `${this["Widget by Name"]}/div[.//*[.="${widgetName}"]]`
+    return (widgetName: string) => `${this["Widgets container"]}/div[.//*[.="${widgetName}"]]`
   }
 }
 

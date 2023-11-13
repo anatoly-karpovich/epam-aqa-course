@@ -133,6 +133,7 @@ export class BasePage {
           if (text === actualText) {
             expectedNotification = n;
             await n.click();
+            await n.waitForDisplayed({ reverse: true })
             break;
           }
         }

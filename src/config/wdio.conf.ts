@@ -3,8 +3,7 @@ import * as dotenv from "dotenv"
 import hooks from './hooks/wdio-hooks.js'
 import test_runner from './test-runners.js'
 import reporters from './reporters.js'
-import suites from './specs/suites.js'
-import spec from './specs/spec.js'
+
 
 
 dotenv.config()
@@ -41,9 +40,6 @@ export const config: Options.Testrunner = {
     // will be called from there.
     //
     // ToDo: define location for spec files here
-    specs: spec,
-
-    suites: suites,
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'

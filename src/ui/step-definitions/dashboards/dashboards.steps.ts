@@ -39,8 +39,8 @@ When(/^I open (created|demo) dashboard detals on "All Dashboards" page$/, async 
 
 Then(/^I should see following widgets on "Dashboard Details" page:$/, async function(table: DataTable) {
   const widgets = table.rows().flat();
-  for(const winget of widgets) {
-    await DashboardDetailsPage.waitForElementAndScroll(DashboardDetailsPage["Widget by Name"](winget))
+  for(const widget of widgets) {
+    await DashboardDetailsPage.waitForElementAndScroll(DashboardDetailsPage["Widget by Name"](widget))
   }
 })
 
