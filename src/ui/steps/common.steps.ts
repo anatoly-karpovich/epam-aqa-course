@@ -1,6 +1,7 @@
 import { logStep } from "../../utils/reporter/reporter.js";
 import LoginPage from "../pages/login.page.js";
 import conf from "../../config/config.js";
+import { NOTIFICATION_MESSAGES } from "../../data/dashboards/dashboardsUi.js";
 
 class CommonSteps {
   @logStep("Open Report Portal")
@@ -8,9 +9,12 @@ class CommonSteps {
     await LoginPage.openPage(conf.baseUrl);
   }
 
-  async skipNotificationMessage(message?: string) {
-    await LoginPage.click(LoginPage["Notification message"](message));
-    await LoginPage.waitForElement(LoginPage["Notification message"](message), true);
+  async skipNotificationMessage(message: NOTIFICATION_MESSAGES) {
+    await LoginPage.checkNotificationWithText(message)
+  }
+
+  async waitForSpinnersToHide() {
+    await LoginPage.waitForEmenetsArrayToBeDisplayed(LoginPage.Spinner, true)
   }
 }
 

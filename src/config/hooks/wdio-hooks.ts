@@ -1,8 +1,15 @@
 import type { Services } from '@wdio/types';
 import { rimraf } from 'rimraf';
-import Logger from "../utils/logger/loggers/winstonLogger.js"
+import { mocha_hooks } from './mocha-hooks.js';
+import { cucumber_hooks } from './cucumber-hooks.js';
+import CommonSteps from '../../ui/steps/common.steps.js';
 
-export const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
+const runner_hooks = {
+    mocha: mocha_hooks,
+    cucumber: cucumber_hooks
+}
+
+const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
     //
     // =====
     // Hooks
@@ -58,6 +65,7 @@ export const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
      */
     before: async function (capabilities, specs) {
         await browser.maximizeWindow();
+        await CommonSteps.openReportPortal();
     },
     /**
      * Runs before a WebdriverIO command gets executed.
@@ -73,11 +81,6 @@ export const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
     // beforeSuite: function (suite) {
     // },
     /**
-     * Function to be executed before a test (in Mocha/Jasmine) starts.
-     */
-    // beforeTest: function (test, context) {
-    // },
-    /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
      */
@@ -89,22 +92,6 @@ export const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
      */
     // afterHook: function (test, context, { error, result, duration, passed, retries }, hookName) {
     // },
-    /**
-     * Function to be executed after a test (in Mocha/Jasmine only)
-     * @param {object}  test             test object
-     * @param {object}  context          scope object the test was executed with
-     * @param {Error}   result.error     error object in case the test fails, otherwise `undefined`
-     * @param {*}       result.result    return object of test function
-     * @param {number}  result.duration  duration of test
-     * @param {boolean} result.passed    true if test has passed, otherwise false
-     * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
-     */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        Logger.sendLogsToReport();
-        if (!passed) {
-          await browser.takeScreenshot();
-        }
-    },
 
 
     /**
@@ -157,3 +144,5 @@ export const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
     // onReload: function(oldSessionId, newSessionId) {
     // }
 }
+
+export default { ...hooks, ...runner_hooks[process.env.TEST_RUNNER || "mocha"] }

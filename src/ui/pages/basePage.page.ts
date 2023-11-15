@@ -1,9 +1,9 @@
-import { LoggerWrapper } from "../../utils/logger/loggerWrapper.js";
+import { LoggerFactory } from "../../utils/logger/loggerWrapper.js";
 import { logStep } from "../../utils/reporter/reporter.js";
 import { hideSecretData } from "../../utils/strings/index.js";
 import { DEFAULT_TIMEOUT } from "../../utils/timeouts/timeouts.js";
 
-const Logger = LoggerWrapper.getLogger();
+const Logger = LoggerFactory.getLogger();
 
 type SetValueContext = {
   isSecretValue: boolean;
@@ -12,6 +12,10 @@ type SetValueContext = {
 export class BasePage {
   get ["Notification message"]() {
     return (notificationText?: string) => (notificationText ? `//div[@id="notification-root"]//p[text()="${notificationText}"]` : `div#notification-root p`);
+  }
+
+  get ["Spinner"]() {
+    return `div.spinningPreloader__spinning-preloader--iC5Pz`;
   }
 
   async findElement(selector: string) {
@@ -39,6 +43,7 @@ export class BasePage {
       const element = await this.waitForElement(selector, false, timeout);
       await element.waitForExist({ timeout });
       await element.scrollIntoView({ block: "center" });
+      await element.waitForClickable({ timeout });
       Logger.log(`Successfully scrolled to element with selector ${selector}`);
       return element;
     } catch (error) {
@@ -119,18 +124,45 @@ export class BasePage {
   }
 
   async checkNotificationWithText(text: string) {
-    return await browser.waitUntil(async () => {
-      const notifications = await this.findElementArray(this["Notification message"]());
-      let expectedNotification: WebdriverIO.Element | undefined;
-      for (const n of notifications) {
-        let actualText = await n.getText();
-        if (text === actualText) {
-          expectedNotification = n;
-          await n.click();
+    let expectedNotification: WebdriverIO.Element | undefined;
+    return await browser.waitUntil(
+      async () => {
+        const notifications = await this.findElementArray(this["Notification message"]());
+        for (const n of notifications) {
+          let actualText = await n.getText();
+          if (text === actualText) {
+            expectedNotification = n;
+            await n.click();
+            await n.waitForDisplayed({ reverse: true })
+            break;
+          }
         }
-        break;
-      }
-      return expectedNotification;
-    });
+        return expectedNotification;
+      },
+      { timeoutMsg: `Notification message with text "${text}" was not found`, timeout: DEFAULT_TIMEOUT }
+    );
+  }
+
+  async waitForElementToChangeText(selector: string, text: string, timeout = DEFAULT_TIMEOUT) {
+    await browser.waitUntil(
+      async () => {
+        const elementText = await this.getText(selector);
+        return elementText === text;
+      },
+      { timeout, timeoutMsg: `Element still does not has text ${text}` }
+    );
+  }
+
+  async waitForEmenetsArrayToBeDisplayed(selector: string, reverse?: boolean, timeout = DEFAULT_TIMEOUT) {
+    await browser.waitUntil(
+      async () => {
+        const elements = await this.findElementArray(selector);
+        for (const element of elements) {
+          await element.waitForDisplayed({ timeout, reverse });
+        }
+        return true;
+      },
+      { timeout }
+    );
   }
 }

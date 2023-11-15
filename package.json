@@ -9,19 +9,22 @@
     "@types/winston": "^2.4.4",
     "@wdio/allure-reporter": "^8.17.0",
     "@wdio/cli": "^8.17.0",
+    "@wdio/cucumber-framework": "^8.20.3",
     "@wdio/jasmine-framework": "^8.20.0",
     "@wdio/local-runner": "^8.17.0",
     "@wdio/mocha-framework": "^8.17.0",
     "@wdio/spec-reporter": "^8.17.0",
+    "cross-env": "^7.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
   "scripts": {
     "test": "npm run build && wdio run ./src/config/wdio.conf.ts",
     "test:ui": "npm run test --suite ui",
+    "test:run": "cross-env TEST_RUNNER=cucumber npm run test -- --cucumberOpts.tags='@run'",
     "build": "rimraf dist && npx tsc",
     "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",
-    "report-open": "allure open src/report/allure-report"
+    "report-open": "npm run report && allure open src/report/allure-report"
   },
   "dependencies": {
     "allure-commandline": "^2.24.1",

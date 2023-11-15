@@ -1,5 +1,4 @@
 import AllDashboardsSteps from "../../steps/dashboards/allDashboards.steps.js";
-import CommonSteps from "../../steps/common.steps.js";
 import LoginSteps from "../../steps/login.steps.js";
 import AddNewDashboardSteps from "../../steps/dashboards/AddNewDashboard.steps.js";
 import { generateNewDashboard } from "../../../data/dashboards/dashboardsUi.js";
@@ -8,11 +7,11 @@ import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.j
 
 describe("Create Dashboard", () => {
   beforeEach(async () => {
-    await CommonSteps.openReportPortal();
+    await LoginSteps.login();
   });
 
   it("Create dashboard with smoke data", async () => {
-    await LoginSteps.login();
+
     await AllDashboardsSteps.openAddNewDashboardModal();
     const dashboard = generateNewDashboard();
     await AddNewDashboardSteps.submitNewDashboard(dashboard);

@@ -1,5 +1,4 @@
 import AllDashboardsSteps from "../../steps/dashboards/allDashboards.steps.js";
-import CommonSteps from "../../steps/common.steps.js";
 import LoginSteps from "../../steps/login.steps.js";
 import AddNewDashboardSteps from "../../steps/dashboards/AddNewDashboard.steps.js";
 import { generateNewDashboard } from "../../../data/dashboards/dashboardsUi.js";
@@ -12,7 +11,6 @@ describe("Edit Dashboard", () => {
   let dashboard = generateNewDashboard();
 
   beforeEach(async () => {
-    await CommonSteps.openReportPortal();
     await LoginSteps.login();
     await AllDashboardsSteps.openAddNewDashboardModal();
     await AddNewDashboardSteps.submitNewDashboard(dashboard);
