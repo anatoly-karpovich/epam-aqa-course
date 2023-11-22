@@ -3,11 +3,7 @@ export interface INewDashboardUI {
   description?: string;
 }
 
-export interface IDashboardDeleteResponse {
-  message: string;
-}
-
-export interface IDashboardUpdateResponse {
+export interface IDashboardMessageResponse {
   message: string;
 }
 

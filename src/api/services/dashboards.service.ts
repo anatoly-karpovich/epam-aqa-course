@@ -1,5 +1,5 @@
 import { IRequestOptions, IResponse } from "../../types/api/apiClient.types";
-import type { IDashboardDeleteResponse, IDashboardGetAllResponse, IDashboardResponse, IDashboardUpdateResponse, INewDashboardUI } from "../../types/dashboards/dashboards.types.js";
+import type { IDashboardGetAllResponse, IDashboardMessageResponse, IDashboardResponse, INewDashboardUI } from "../../types/dashboards/dashboards.types.js";
 import { apiConfig } from "../apiConfig.js";
 import apiClient from "../apiClients/apiClient.js";
 
@@ -18,7 +18,7 @@ class DashboardsService {
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
 
-  updateDashboard(dashboard: INewDashboardUI, dashboardId: number, projectName: string, token?: string): Promise<IResponse<IDashboardUpdateResponse>> {
+  updateDashboard(dashboard: INewDashboardUI, dashboardId: number, projectName: string, token?: string): Promise<IResponse<IDashboardMessageResponse>> {
     const options: IRequestOptions = {
       method: "put",
       baseURL: apiConfig.baseURL,
@@ -55,7 +55,7 @@ class DashboardsService {
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
 
-  deleteDashboard(projectName: string, dashboardId: number, token?: string): Promise<IResponse<IDashboardDeleteResponse>> {
+  deleteDashboard(projectName: string, dashboardId: number, token?: string): Promise<IResponse<IDashboardMessageResponse>> {
     const options: IRequestOptions = {
       method: "delete",
       baseURL: apiConfig.baseURL,

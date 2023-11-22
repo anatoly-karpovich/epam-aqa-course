@@ -24,8 +24,8 @@
   },
   "scripts": {
     "test": "npm run build && wdio run ./src/config/wdio.conf.ts",
-    "test:ui": "npm run test --suite ui",
-    "test:api": "npm run test --suite api",
+    "test:ui": "npm run test -- --suite ui",
+    "test:api": "npm run test -- --suite api",
     "test:run": "cross-env TEST_RUNNER=cucumber npm run test -- --cucumberOpts.tags='@run'",
     "build": "rimraf dist && npx tsc",
     "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",
