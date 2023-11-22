@@ -14,7 +14,7 @@ class CommonSteps {
   }
 
   async waitForSpinnersToHide() {
-    await LoginPage.waitForEmenetsArrayToBeDisplayed(LoginPage.Spinner, true)
+    await LoginPage.waitForElementsArrayToBeDisplayed(LoginPage.Spinner, true)
   }
 }
 

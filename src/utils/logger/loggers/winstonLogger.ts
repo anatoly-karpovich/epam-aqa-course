@@ -27,6 +27,14 @@ class WinstonLogger extends Logger {
     }
   }
 
+  logApiRequest(requestInfo: string) {
+    this.log(`API Request: ${requestInfo}`);
+  }
+
+  logApiResponse(responseInfo: string, level: logLevels = "info") {
+    this.log(`API Response: ${responseInfo}`);
+  }
+
   sendLogsToReport() {
     const log = this.logArray.join("\n");
     attachLog(log);

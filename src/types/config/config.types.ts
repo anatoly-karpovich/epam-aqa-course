@@ -2,7 +2,9 @@ import type { ICredentials } from "../login.types.js"
 
 interface IConfigForEnv {
     credentials: ICredentials,
-    baseUrl: string
+    baseUrl: string,
+    LoginAuthorizationHeader?: string,
+    projectName?: string
   }
   
   export interface IConfig {

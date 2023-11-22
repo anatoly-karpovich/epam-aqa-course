@@ -6,11 +6,13 @@ import SidebarSteps from "../../steps/sidebar.steps.js";
 import DashboardDetailsSteps from "../../steps/dashboards/dashboardDetails.steps.js";
 import EditDashboardSteps from "../../steps/dashboards/editDashboard.steps.js";
 import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.js";
+import CommonSteps from "../../steps/common.steps.js";
 
-describe("Edit Dashboard", () => {
+describe("[UI] Edit Dashboard", () => {
   let dashboard = generateNewDashboard();
 
   beforeEach(async () => {
+    await CommonSteps.openReportPortal()
     await LoginSteps.login();
     await AllDashboardsSteps.openAddNewDashboardModal();
     await AddNewDashboardSteps.submitNewDashboard(dashboard);

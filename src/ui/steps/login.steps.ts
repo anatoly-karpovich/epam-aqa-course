@@ -8,7 +8,7 @@ import CommonSteps from "./common.steps.js";
 class LoginSteps {
   @logStep("Login to Report Portal")
   async login(credentials?: ICredentials) {
-    await LoginPage.setValue(LoginPage["Login input"], credentials?.login || conf.credentials.login);
+    await LoginPage.setValue(LoginPage["Login input"], credentials?.username || conf.credentials.username);
     await LoginPage.setValue(LoginPage["Password input"], credentials?.password || conf.credentials.password, { isSecretValue: true });
     await LoginPage.click(LoginPage["Login button"]);
     await CommonSteps.skipNotificationMessage(NOTIFICATION_MESSAGES.SIGNED_IN);

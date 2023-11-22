@@ -153,7 +153,7 @@ export class BasePage {
     );
   }
 
-  async waitForEmenetsArrayToBeDisplayed(selector: string, reverse?: boolean, timeout = DEFAULT_TIMEOUT) {
+  async waitForElementsArrayToBeDisplayed(selector: string, reverse?: boolean, timeout = DEFAULT_TIMEOUT) {
     await browser.waitUntil(
       async () => {
         const elements = await this.findElementArray(selector);

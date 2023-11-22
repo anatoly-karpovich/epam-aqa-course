@@ -1,5 +1,5 @@
 import { NOTIFICATION_MESSAGES } from "../../../data/dashboards/dashboardsUi.js";
-import type { INewDashboardUI } from "../../../types/dashboards/addNewDashboard.types.js";
+import type { INewDashboardUI } from "../../../types/dashboards/dashboards.types.js";
 import { logStep } from "../../../utils/reporter/reporter.js";
 import AddNewDashboardModal from "../../pages/dashboards/modals/addNewDashboard.modal.js";
 import CommonSteps from "../common.steps.js";

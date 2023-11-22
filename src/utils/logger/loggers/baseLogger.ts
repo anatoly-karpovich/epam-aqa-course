@@ -15,6 +15,8 @@ export abstract class Logger {
   clearLog(): void {
     _.remove(this.logArray);
   }
+  logApiRequest(requestInfo: string): void {}
+  logApiResponse(responseInfo: string, level: logLevels = "info"): void {}
 }
 
 type logLevels = "info" | "error" | "warn";

@@ -1,5 +1,6 @@
-const mocha_jasmine_spec = ["../**/*test.ts"];
-const mocha_jasmine_suites = { ui: ["../ui/**/*test.ts"] }
+//TODO: Solve problem with Suites
+const mocha_jasmine_spec = ["../../src/**/*test.ts"];
+const mocha_jasmine_suites = { ui: ["../../src/ui/**/*.test.ts"], api: ["../../src/api/**/*.test.ts"] }
 const cucumber_spec = ["../**/*.feature"];
 const cucumber_suites = { ui: ["../ui/features/**/*.feature"] }
 

@@ -4,9 +4,11 @@ import AddNewDashboardSteps from "../../steps/dashboards/AddNewDashboard.steps.j
 import { generateNewDashboard } from "../../../data/dashboards/dashboardsUi.js";
 import SidebarSteps from "../../steps/sidebar.steps.js";
 import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.js";
+import CommonSteps from "../../steps/common.steps.js";
 
-describe("Create Dashboard", () => {
+describe("[UI] Create Dashboard", () => {
   beforeEach(async () => {
+    await CommonSteps.openReportPortal()
     await LoginSteps.login();
   });
 

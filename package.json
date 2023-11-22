@@ -2,10 +2,14 @@
   "name": "my-new-project",
   "type": "module",
   "devDependencies": {
+    "@types/ajv": "^1.0.0",
+    "@types/axios": "^0.14.0",
     "@types/dotenv": "^8.2.0",
+    "@types/form-data": "^2.5.0",
     "@types/jasmine": "^5.1.1",
     "@types/lodash": "^4.14.199",
     "@types/rimraf": "^4.0.5",
+    "@types/superagent": "^4.1.22",
     "@types/winston": "^2.4.4",
     "@wdio/allure-reporter": "^8.17.0",
     "@wdio/cli": "^8.17.0",
@@ -21,16 +25,22 @@
   "scripts": {
     "test": "npm run build && wdio run ./src/config/wdio.conf.ts",
     "test:ui": "npm run test --suite ui",
+    "test:api": "npm run test --suite api",
     "test:run": "cross-env TEST_RUNNER=cucumber npm run test -- --cucumberOpts.tags='@run'",
     "build": "rimraf dist && npx tsc",
     "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",
     "report-open": "npm run report && allure open src/report/allure-report"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "ajv": "^8.12.0",
     "allure-commandline": "^2.24.1",
+    "axios": "^1.6.2",
     "dotenv": "^16.3.1",
+    "form-data": "^4.0.0",
     "lodash": "^4.17.21",
     "rimraf": "^5.0.5",
+    "superagent": "^8.1.2",
     "winston": "^3.11.0"
   }
 }

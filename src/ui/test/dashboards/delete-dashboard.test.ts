@@ -5,11 +5,13 @@ import { generateNewDashboard } from "../../../data/dashboards/dashboardsUi.js";
 import SidebarSteps from "../../steps/sidebar.steps.js";
 import DashboardDetailsSteps from "../../steps/dashboards/dashboardDetails.steps.js";
 import DeleteDashboardSteps from "../../steps/dashboards/deleteDashboard.steps.js";
+import CommonSteps from "../../steps/common.steps.js";
 
-describe("Delete Dashboard", () => {
+describe("[UI] Delete Dashboard", () => {
   let dashboard = generateNewDashboard();
 
   beforeEach(async () => {
+    await CommonSteps.openReportPortal()
     await LoginSteps.login();
     await AllDashboardsSteps.openAddNewDashboardModal();
     await AddNewDashboardSteps.submitNewDashboard(dashboard);
