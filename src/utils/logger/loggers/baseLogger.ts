@@ -12,11 +12,9 @@ export abstract class Logger {
 
   log(message: string, logLevel?: logLevels): void {}
   sendLogsToReport(): void {}
-  clearLog(): void {
-    _.remove(this.logArray);
-  }
   logApiRequest(requestInfo: string): void {}
   logApiResponse(responseInfo: string, level: logLevels = "info"): void {}
+  clearLog(): void {}
 }
 
 type logLevels = "info" | "error" | "warn";
