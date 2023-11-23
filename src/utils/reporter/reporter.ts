@@ -1,10 +1,11 @@
 import Logger from "../logger/logger.js";
 import allure from "@wdio/allure-reporter";
 import { Status } from "allure-js-commons";
-import { hideSecretData } from "../strings/index.js";
+import { hideSecretData } from "../string/index.js";
 import { IRequestOptions, IResponse } from "../../types/api/apiClient.types.js";
-
-// TODO: Hide passwords in report
+import fieldsToHideInReport from "../../data/fieldsToHideInReport.js";
+import _ from "lodash";
+import { hideValueInObject } from "../object/index.js";
 
 export function logStep(stepName: string): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
@@ -33,7 +34,8 @@ export function logApiStep(target: any, propertyName: string, descriptor: Proper
   const originalMethod = descriptor.value;
 
   descriptor.value = async function (...args: any[]) {
-    const options: IRequestOptions = args[0];
+    const options: IRequestOptions = _.cloneDeep(args[0]);
+    fieldsToHideInReport.forEach(f => hideValueInObject(options, f))
     allure.startStep(`Request: ${options.method?.toUpperCase()} ${options.url}`);
     allure.addAttachment("Request Headers", JSON.stringify(options.headers, null, 2), "application/json");
     allure.addAttachment("Request Body", options.data ? JSON.stringify(options.data, null, 2) : {}, "application/json");

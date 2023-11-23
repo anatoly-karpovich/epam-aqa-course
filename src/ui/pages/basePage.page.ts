@@ -1,6 +1,6 @@
 import Logger from "../../utils/logger/logger.js";
 import { logStep } from "../../utils/reporter/reporter.js";
-import { hideSecretData } from "../../utils/strings/index.js";
+import { hideSecretData } from "../../utils/string/index.js";
 import { DEFAULT_TIMEOUT } from "../../utils/timeouts/timeouts.js";
 
 

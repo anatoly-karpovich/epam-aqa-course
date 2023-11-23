@@ -13,10 +13,10 @@ import { validateSchema } from "../../../utils/validations/validate-json-schema.
 const dashboardIds: number[] = [];
 describe("[API] Dashboards - POST method", () => {
   before(async () => {
-    await LoginApiSteps.loginAsAdmin();
   });
 
   it("Create Dashboard with valid data", async () => {
+    await LoginApiSteps.loginAsAdmin();
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).toBe(STATUS_CODES.CREATED);
