@@ -43,6 +43,17 @@ describe("[API] Dashboards - PUT method", () => {
       expect(updatedDashboardResponse.status).toBe(STATUS_CODES.INVALID_REQUEST);
       validateSchema(updatedDashboardResponse, errorSchema)
     });
+
+    it("Update not existing Dashboard", async () => {
+      const dashboardId = dashboardIds[0]
+      await DashboardApiSteps.deleteDashboard(dashboardId);
+
+      const dashboardData = generateNewDashboard();
+      const updatedDashboardResponse = await DashboardsService.updateDashboard(dashboardData, dashboardId, config.projectName, LoggedInUsers.getToken());
+      expect(updatedDashboardResponse.status).toBe(STATUS_CODES.NOT_FOUND);
+      validateSchema(updatedDashboardResponse, errorSchema)
+      dashboardIds.length = 0;
+    })
   }
 
   afterEach(async () => {
