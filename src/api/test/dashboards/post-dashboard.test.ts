@@ -34,6 +34,17 @@ describe("[API] Dashboards - POST method", () => {
     });
   }
 
+  it("Add Dashboard with not unique name", async () => {
+    const dashboardData = generateNewDashboard();
+    const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
+    expect(createDashboardResponse.status).toBe(STATUS_CODES.CREATED);
+    dashboardIds.push(createDashboardResponse.data.id);
+
+    const createNotUniqueDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
+    expect(createNotUniqueDashboardResponse.status).toBe(STATUS_CODES.ALREADY_EXISTS);
+    validateSchema(createNotUniqueDashboardResponse, errorSchema)
+  })
+
   afterEach(async () => {
     if (dashboardIds.length) {
       for (const d of dashboardIds) {
