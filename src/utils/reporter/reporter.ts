@@ -1,13 +1,10 @@
+import Logger from "../logger/logger.js";
 import allure from "@wdio/allure-reporter";
 import { Status } from "allure-js-commons";
 import { hideSecretData } from "../strings/index.js";
 import { IRequestOptions, IResponse } from "../../types/api/apiClient.types.js";
 
-// TODO: Solve problem with Logger
 // TODO: Hide passwords in report
-// import { LoggerFactory } from "../logger/loggerWrapper.js";
-
-// const Logger = LoggerFactory.getLogger();
 
 export function logStep(stepName: string): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
@@ -39,9 +36,9 @@ export function logApiStep(target: any, propertyName: string, descriptor: Proper
     const options: IRequestOptions = args[0];
     allure.startStep(`Request: ${options.method?.toUpperCase()} ${options.url}`);
     allure.addAttachment("Request Headers", JSON.stringify(options.headers, null, 2), "application/json");
-    allure.addAttachment("Request Body", JSON.stringify(options.data, null, 2), "application/json");
+    allure.addAttachment("Request Body", options.data ? JSON.stringify(options.data, null, 2) : {}, "application/json");
     allure.endStep();
-    // Logger.logApiRequest(JSON.stringify(options));
+    Logger.logApiRequest(JSON.stringify(options));
     try {
       const response: IResponse = await originalMethod.apply(this, args);
 
@@ -51,7 +48,7 @@ export function logApiStep(target: any, propertyName: string, descriptor: Proper
 
       allure.endStep(response.status >= 400 ? Status.FAILED : Status.PASSED);
 
-      // Logger.logApiResponse(JSON.stringify({ status: response.status, body: response.data }));
+      Logger.logApiResponse(JSON.stringify({ status: response.status, body: response.data }));
 
       return response;
     } catch (error) {

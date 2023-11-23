@@ -25,7 +25,6 @@ class AxiosApiClient implements IApiClient {
   async sendFormDataRequest<T>(options: IRequestOptions): Promise<IResponse<T>> {
     const formData = new FormData();
 
-    // Append data to FormData
     if (!options.data) {
       throw new Error("Request body was not provided");
     }
@@ -34,10 +33,7 @@ class AxiosApiClient implements IApiClient {
       formData.append(key, options.data[key]);
     }
 
-    // Update headers for FormData
     options.headers["Content-Type"] = `multipart/form-data; boundary=${formData.getBoundary()}`;
-
-    // Update options for FormData
     options.data = formData;
 
     try {

@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import { IResponse } from "../../types/api/apiClient.types.js";
-import { LoggerFactory } from "../logger/loggerWrapper.js";
-const Logger = LoggerFactory.getLogger()
+import Logger from "../logger/logger.js";
+
 
 export function validateSchema(response: IResponse, schema: object) {
   const ajv = new Ajv();
