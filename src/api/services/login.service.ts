@@ -14,8 +14,9 @@ class LoginService {
         Authorization: config.LoginAuthorizationHeader
       },
       data: { ...credentials, grant_type : 'password' },
+      requestType: "formData"
     };
-    return apiClient.sendFormDataRequest<ILoginResponse>(options)
+    return apiClient.sendRequest<ILoginResponse>(options)
   }
 }
 

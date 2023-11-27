@@ -1,7 +1,7 @@
 import * as loggers from "./loggers/index.js";
 
-const loggerClients = {
+const loggerServices = {
   winston: loggers.WinstonLogger
 }
 
-export default loggerClients[process.env.LOGGER || 'winston']
+export default loggerServices[process.env.LOGGER || 'winston']

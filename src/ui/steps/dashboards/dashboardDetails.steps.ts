@@ -1,4 +1,4 @@
-import { logStep } from "../../../utils/reporter/reporter.js";
+import { logStep } from "../../../utils/reporter/decorators.js";
 import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.js";
 
 class DashboardDetailsSteps {

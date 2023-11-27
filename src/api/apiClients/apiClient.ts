@@ -1,5 +1,5 @@
-import AxiosApiClient from "./axios.js"
-import SuperagentApiClient from "./superagent.js"
+import AxiosApiClient from "./axisApiClient.js"
+import SuperagentApiClient from "./superagentApiClient.js"
 
 const clients = {
   axios: AxiosApiClient,

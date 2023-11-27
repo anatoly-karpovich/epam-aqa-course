@@ -21,7 +21,8 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "strictNullChecks": true
     },
     "include": [
         "src/**/*.ts"

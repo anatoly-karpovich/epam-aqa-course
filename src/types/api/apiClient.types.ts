@@ -1,5 +1,6 @@
 export type IRequestOptions<Data = object> = {
   method: Method;
+  requestType: "json" | "formData";
   baseURL: string;
   url: string;
   params?: Record<string, string | readonly string[]>;
@@ -8,11 +9,11 @@ export type IRequestOptions<Data = object> = {
   timeout?: number;
 };
 
-type Method = "post" | "get" | "put" | "patch" | "delete"
+type Method = "post" | "get" | "put" | "patch" | "delete";
 
 export interface IApiClient {
-  sendRequest<T>(options: IRequestOptions): Promise<IResponse<T>>,
-  sendFormDataRequest<T>(options: IRequestOptions): Promise<IResponse<T>>,
+  sendRequest<T>(options: IRequestOptions): Promise<IResponse<T>>;
+  sendFormDataRequest<T>(options: IRequestOptions): Promise<IResponse<T>>;
 }
 
 export interface IResponse<T = any> {
@@ -26,6 +27,6 @@ interface RequestParams<T> {
 }
 
 export interface DashboardRequestParams<T> extends RequestParams<T> {
-  projectName: string,
-  dashboardId?: number,
+  projectName: string;
+  dashboardId?: number;
 }

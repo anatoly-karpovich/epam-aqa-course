@@ -1,6 +1,6 @@
 import type { IApiClient, IRequestOptions, IResponse } from "../../types/api/apiClient.types.js";
 import superagent, { SuperAgentRequest, SuperAgentStatic } from "superagent";
-import { logApiStep } from "../../utils/reporter/reporter.js";
+import { logApiStep } from "../../utils/reporter/decorators.js";
 
 class SuperagentApiClient implements IApiClient {
   private agent: SuperAgentStatic;

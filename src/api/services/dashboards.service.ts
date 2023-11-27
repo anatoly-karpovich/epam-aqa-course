@@ -13,7 +13,8 @@ class DashboardsService {
       data: dashboard,
       headers: {
         Authorization: token ?? ""
-      }
+      },
+      requestType: "json"
     }
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
@@ -26,7 +27,8 @@ class DashboardsService {
       data: dashboard,
       headers: {
         Authorization: token ?? ""
-      }
+      },
+      requestType: "json"
     }
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
@@ -38,7 +40,8 @@ class DashboardsService {
       url: apiConfig.endpoints['Dashboard by Id'](projectName, dashboardId),
       headers: {
         Authorization: token ?? ""
-      }
+      },
+      requestType: "json"
     }
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
@@ -50,7 +53,8 @@ class DashboardsService {
       url: apiConfig.endpoints.Dashboard(projectName),
       headers: {
         Authorization: token ?? ""
-      }
+      },
+      requestType: "json"
     }
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
@@ -62,7 +66,8 @@ class DashboardsService {
       url: apiConfig.endpoints['Dashboard by Id'](projectName, dashboardId),
       headers: {
         Authorization: token ?? ""
-      }
+      },
+      requestType: "json"
     }
     return apiClient.sendRequest<INewDashboardUI>(options)
   }

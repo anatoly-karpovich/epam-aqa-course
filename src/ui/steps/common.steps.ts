@@ -1,4 +1,4 @@
-import { logStep } from "../../utils/reporter/reporter.js";
+import { logStep } from "../../utils/reporter/decorators.js";
 import LoginPage from "../pages/login.page.js";
 import conf from "../../config/config.js";
 import { NOTIFICATION_MESSAGES } from "../../data/dashboards/dashboardsUi.js";

@@ -1,14 +1,11 @@
 import * as winston from "winston";
 import _ from "lodash";
-import { attachLog } from "../../reporter/reporter.js";
 import { Logger } from "./baseLogger.js";
+import ReporterService from "../../reporter/reporter.js";
 
 type logLevels = "info" | "error";
 
 class WinstonLogger extends Logger {
-  constructor() {
-    super();
-  }
   private logger = winston.createLogger({
     level: "info",
     format: winston.format.combine(
@@ -37,7 +34,7 @@ class WinstonLogger extends Logger {
 
   sendLogsToReport() {
     const log = this.logArray.join("\n");
-    attachLog(log);
+    this.ReporterServise.attachLog(log);
     this.clearLog();
   }
 
@@ -46,4 +43,4 @@ class WinstonLogger extends Logger {
   }
 }
 
-export default new WinstonLogger();
+export default new WinstonLogger(ReporterService);

@@ -1,7 +1,7 @@
 import type { IApiClient, IRequestOptions, IResponse } from "../../types/api/apiClient.types.js";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import FormData from "form-data";
-import { logApiStep } from "../../utils/reporter/reporter.js";
+import { logApiStep } from "../../utils/reporter/decorators.js";
 
 const request = axios.create();
 let response: AxiosResponse;

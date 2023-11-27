@@ -6,8 +6,10 @@ import DashboardsService from "../services/dashboards.service.js";
 import Dashboards from "../../utils/entities/createdDashboard.js";
 import LoggedInUsers from "../../utils/entities/loggedInUsers.js";
 import { generateDeleteDashboardResponse } from "../../data/dashboards/response.js";
+import { logStep } from "../../utils/reporter/decorators.js";
 
 class DashboardApiSteps {
+  @logStep("Create dashboard via API")
   async createDashboard(projectName?: string, dashboardValues?: Partial<INewDashboardUI>, userToken?: string) {
     const dashboardData = generateNewDashboard(dashboardValues);
     const response = await DashboardsService.createDashboard(dashboardData, projectName ?? config.projectName, userToken ?? LoggedInUsers.getToken());
@@ -17,6 +19,7 @@ class DashboardApiSteps {
     return dashboard;
   }
 
+  @logStep("Delete dashboard via API")
   async deleteDashboard( dashboardId: number, projectName?: string, userToken?: string) {
     const response = await DashboardsService.deleteDashboard(projectName ?? config.projectName, dashboardId, userToken ?? LoggedInUsers.getToken());
     expect(response.status).toBe(STATUS_CODES.OK);

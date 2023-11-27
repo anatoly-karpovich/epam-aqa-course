@@ -1,9 +1,10 @@
 import _ from "lodash";
+import { BaseReporter } from "../../reporter/baseReporter";
 
 export abstract class Logger {
   protected logArray: string[] = [];
   private static instance: Logger;
-  constructor() {
+  constructor(protected ReporterServise: BaseReporter) {
     if (Logger.instance) {
       return Logger.instance;
     }

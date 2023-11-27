@@ -1,4 +1,4 @@
-import { logStep } from "../../utils/reporter/reporter.js";
+import { logStep } from "../../utils/reporter/decorators.js";
 import SidebarPage from "../pages/sidebar/sidebar.page.js";
 
 class SidebarSteps {
