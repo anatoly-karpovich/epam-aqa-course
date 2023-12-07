@@ -8,6 +8,7 @@ import _ from "lodash";
 import { generateDeleteDashboardResponse } from "../../../data/dashboards/response.js";
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
 import { errorSchema, messageSchema } from "../../../data/json-schemas.ts/common.shema.js";
+import { expect } from "chai";
 
 const dashboardIds: number[] = [];
 describe("[API] Dashboards - DELETE method", () => {
@@ -15,24 +16,24 @@ describe("[API] Dashboards - DELETE method", () => {
     const token = await LoginApiSteps.loginAsAdmin();
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, token);
-    expect(createDashboardResponse.status).toBe(STATUS_CODES.CREATED);
-    expect(createDashboardResponse.data).not.toBe(undefined);
+    expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
+    expect(createDashboardResponse.data).not.to.equal(undefined);
     dashboardIds.push(createDashboardResponse.data.id);
   });
 
   it("Delete existing Dashboard", async () => {
     const dashboardId = dashboardIds[dashboardIds.length - 1]
     const deleteDashboardResponse = await DashboardsService.deleteDashboard(config.projectName, dashboardId, LoggedInUsers.getToken());
-    expect(deleteDashboardResponse.status).toBe(STATUS_CODES.OK);
-    expect(deleteDashboardResponse.data).not.toBe(undefined);
-    expect(deleteDashboardResponse.data.message).toBe(generateDeleteDashboardResponse(dashboardId))
+    expect(deleteDashboardResponse.status).to.equal(STATUS_CODES.OK);
+    expect(deleteDashboardResponse.data).not.to.equal(undefined);
+    expect(deleteDashboardResponse.data.message).to.equal(generateDeleteDashboardResponse(dashboardId))
     validateSchema(deleteDashboardResponse, messageSchema)
   });
 
   it("Delete not existing Dashboard", async () => {
     const dashboardId = dashboardIds[dashboardIds.length - 1]
     const deleteDashboardResponse = await DashboardsService.deleteDashboard(config.projectName, dashboardId, LoggedInUsers.getToken());
-    expect(deleteDashboardResponse.status).toBe(STATUS_CODES.NOT_FOUND);
+    expect(deleteDashboardResponse.status).to.equal(STATUS_CODES.NOT_FOUND);
     validateSchema(deleteDashboardResponse, errorSchema)
   });
 });

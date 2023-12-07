@@ -12,15 +12,16 @@ class SuperagentApiClient extends BaseApiClient {
   }
 
   protected async send() {
-    this.response = await this.request;
+    return await this.request;
   }
 
   protected transformRequestOptions(): void {
-    if (this.options && this.options.headers) this.request.set(this.options.headers);
+    if(!this.options) throw new Error(`Request options were not provided`);
+    if (this.options.headers) this.request.set(this.options.headers);
 
-    if (this.options && this.options.requestType === "json") {
+    if (this.options.requestType === "json") {
       if (this.options.data) this.request.send(this.options.data);
-    } else if (this.options && this.options.requestType === "formData") {
+    } else if (this.options.requestType === "formData") {
       if (this.options.data) {
         const data = this.options.data;
         Object.keys(data).forEach((key) => {

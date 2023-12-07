@@ -1,4 +1,4 @@
-import AxiosApiClient from "./axisApiClient.js"
+import AxiosApiClient from "./axiosApiClient.js"
 import SuperagentApiClient from "./superagentApiClient.js"
 
 const clients = {

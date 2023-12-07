@@ -11,10 +11,6 @@ export type IRequestOptions<Data = object> = {
 
 type Method = "post" | "get" | "put" | "patch" | "delete";
 
-export interface IApiClient {
-  sendRequest<T>(options: IRequestOptions): Promise<IResponse<T>>;
-  sendFormDataRequest<T>(options: IRequestOptions): Promise<IResponse<T>>;
-}
 
 export interface IResponse<T = any> {
   data: T;

@@ -15,7 +15,7 @@ export abstract class BaseApiClient {
   protected abstract createRequestInstance(): void;
 
   /**
-   * Transforms requestOptions from IRequestOptions to satisfy the api client options type
+   * Transforms requestOptions from IRequestOptions to satisfy the api client options type based on the requestType field of requestOptions
    */
   protected abstract transformRequestOptions(): void;
 
@@ -27,13 +27,14 @@ export abstract class BaseApiClient {
   /**
    * Sends request with provided options
    */
-  protected abstract send(): Promise<void>
+  protected abstract send(): Promise<object>
 
   /**
    * Logs api errors to console
    * @param error error from your api client
    */
   protected abstract logError(error: any): void;
+
   constructor(private reporterService: BaseReporter, private loggerService: Logger) {
     this.options = null;
   }
@@ -44,23 +45,26 @@ export abstract class BaseApiClient {
    * @returns 
    */
   async sendRequest<T>(initOptions: IRequestOptions): Promise<IResponse<T>> {
-    this.options = initOptions;
-    if (!this.options) throw new Error(`Request options were not provided`);
-    this.createRequestInstance();
-    this.transformRequestOptions();
     try {
-      await this.send();
-    } catch (error: any) {
-      this.response = error.response;
-      this.logError(error);
+      this.options = initOptions;
+      if (!this.options) throw new Error(`Request options were not provided`);
+      this.createRequestInstance();
+      this.transformRequestOptions();
+      try {
+        this.response = await this.send();
+      } catch (error: any) {
+        this.response = error.response;
+        this.logError(error);
+      }
+      this.transformResponse();
+      this.secureCheck();
+      this.logRequest();
+    } catch(error: unknown) {
+      throw new Error(`Failed to send request. Reason:\n ${(error as Error).message}`, {cause: error})
     }
-    this.transformResponse();
-    this.secureCheck();
-    this.logRequest();
     return this.response;
   }
 
-  
   private secureCheck() {
     fieldsToHideInReport.forEach((f) => this.options && hideValueInObject(this.options, f));
   }

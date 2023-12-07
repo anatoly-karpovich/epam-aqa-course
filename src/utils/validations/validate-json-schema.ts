@@ -1,6 +1,7 @@
 import Ajv from "ajv";
 import { IResponse } from "../../types/api/apiClient.types.js";
 import Logger from "../logger/logger.js";
+import { expect } from "chai";
 
 
 export function validateSchema(response: IResponse, schema: object) {
@@ -10,5 +11,5 @@ export function validateSchema(response: IResponse, schema: object) {
   if(!isValidSchema) {
     Logger.log(JSON.stringify(validate.errors), 'error')
   }
-  expect(isValidSchema).toBe(true);
+  expect(isValidSchema).to.equal(true);
 }

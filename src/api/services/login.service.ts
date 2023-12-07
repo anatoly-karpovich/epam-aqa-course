@@ -5,7 +5,7 @@ import apiClient from "../apiClients/apiClient.js";
 import { apiConfig } from "../apiConfig.js";
 
 class LoginService {
-  login(credentials: ICredentials): Promise<IResponse<ILoginResponse>> {
+  async login(credentials: ICredentials): Promise<IResponse<ILoginResponse>> {
     const options: IRequestOptions = {
       method: "post",
       baseURL: apiConfig.baseURL,

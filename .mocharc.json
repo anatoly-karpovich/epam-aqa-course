@@ -1,0 +1,9 @@
+{
+  "spec": "dist/api/**/*.test.js",
+  "require": ["ts-node/register", "dotenv/config"],
+  "recursive": true,
+  "timeout": 60000,
+  "exit": true,
+  "reporter": "mocha-multi-reporters",
+  "reporterOptions": ["configFile=src/config/mocha-reporter.json"]
+}

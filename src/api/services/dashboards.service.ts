@@ -5,7 +5,7 @@ import apiClient from "../apiClients/apiClient.js";
 
 
 class DashboardsService {
-  createDashboard(dashboard: INewDashboardUI, projectName: string, token?: string): Promise<IResponse<IDashboardResponse>> {
+  async createDashboard(dashboard: INewDashboardUI, projectName: string, token?: string): Promise<IResponse<IDashboardResponse>> {
     const options: IRequestOptions = {
       method: "post",
       baseURL: apiConfig.baseURL,
@@ -19,7 +19,7 @@ class DashboardsService {
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
 
-  updateDashboard(dashboard: INewDashboardUI, dashboardId: number, projectName: string, token?: string): Promise<IResponse<IDashboardMessageResponse>> {
+  async updateDashboard(dashboard: INewDashboardUI, dashboardId: number, projectName: string, token?: string): Promise<IResponse<IDashboardMessageResponse>> {
     const options: IRequestOptions = {
       method: "put",
       baseURL: apiConfig.baseURL,
@@ -33,7 +33,7 @@ class DashboardsService {
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
 
-  getDashboardById(projectName: string, dashboardId: number, token?: string): Promise<IResponse<IDashboardResponse>> {
+  async getDashboardById(projectName: string, dashboardId: number, token?: string): Promise<IResponse<IDashboardResponse>> {
     const options: IRequestOptions = {
       method: "get",
       baseURL: apiConfig.baseURL,
@@ -46,7 +46,7 @@ class DashboardsService {
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
 
-  getAllDashboards(projectName: string, token?: string): Promise<IResponse<IDashboardGetAllResponse>> {
+  async getAllDashboards(projectName: string, token?: string): Promise<IResponse<IDashboardGetAllResponse>> {
     const options: IRequestOptions = {
       method: "get",
       baseURL: apiConfig.baseURL,
@@ -59,7 +59,7 @@ class DashboardsService {
     return apiClient.sendRequest<INewDashboardUI>(options)
   }
 
-  deleteDashboard(projectName: string, dashboardId: number, token?: string): Promise<IResponse<IDashboardMessageResponse>> {
+  async deleteDashboard(projectName: string, dashboardId: number, token?: string): Promise<IResponse<IDashboardMessageResponse>> {
     const options: IRequestOptions = {
       method: "delete",
       baseURL: apiConfig.baseURL,

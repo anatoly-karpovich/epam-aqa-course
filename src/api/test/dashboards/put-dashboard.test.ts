@@ -10,6 +10,7 @@ import _ from "lodash";
 import { generateUpdateDashboardResponse } from "../../../data/dashboards/response.js";
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
 import { errorSchema, messageSchema } from "../../../data/json-schemas.ts/common.shema.js";
+import { expect } from "chai";
 
 const dashboardIds: number[] = [];
 
@@ -21,7 +22,7 @@ describe("[API] Dashboards - PUT method", () => {
   beforeEach(async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
-    expect(createDashboardResponse.status).toBe(STATUS_CODES.CREATED);
+    expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
     dashboardIds.push(createDashboardResponse.data.id)
   })
 
@@ -29,9 +30,9 @@ describe("[API] Dashboards - PUT method", () => {
     const dashboardData = generateNewDashboard();
     const dashboardId = dashboardIds[dashboardIds.length - 1]
     const updatedDashboardResponse = await DashboardsService.updateDashboard(dashboardData, dashboardId, config.projectName, LoggedInUsers.getToken());
-    expect(updatedDashboardResponse.status).toBe(STATUS_CODES.OK);
-    expect(updatedDashboardResponse.data).not.toBe(undefined);
-    expect(updatedDashboardResponse.data.message).toBe(generateUpdateDashboardResponse(dashboardId))
+    expect(updatedDashboardResponse.status).to.equal(STATUS_CODES.OK);
+    expect(updatedDashboardResponse.data).not.to.equal(undefined);
+    expect(updatedDashboardResponse.data.message).to.equal(generateUpdateDashboardResponse(dashboardId))
     validateSchema(updatedDashboardResponse, messageSchema)
   });
 
@@ -40,7 +41,7 @@ describe("[API] Dashboards - PUT method", () => {
       const dashboard = _.omit(dashboardData, "testName")
       const dashboardId = dashboardIds[dashboardIds.length - 1]
       const updatedDashboardResponse = await DashboardsService.updateDashboard(dashboard, dashboardId, config.projectName, LoggedInUsers.getToken());
-      expect(updatedDashboardResponse.status).toBe(STATUS_CODES.INVALID_REQUEST);
+      expect(updatedDashboardResponse.status).to.equal(STATUS_CODES.INVALID_REQUEST);
       validateSchema(updatedDashboardResponse, errorSchema)
     });
 
@@ -50,7 +51,7 @@ describe("[API] Dashboards - PUT method", () => {
 
       const dashboardData = generateNewDashboard();
       const updatedDashboardResponse = await DashboardsService.updateDashboard(dashboardData, dashboardId, config.projectName, LoggedInUsers.getToken());
-      expect(updatedDashboardResponse.status).toBe(STATUS_CODES.NOT_FOUND);
+      expect(updatedDashboardResponse.status).to.equal(STATUS_CODES.NOT_FOUND);
       validateSchema(updatedDashboardResponse, errorSchema)
       dashboardIds.length = 0;
     })

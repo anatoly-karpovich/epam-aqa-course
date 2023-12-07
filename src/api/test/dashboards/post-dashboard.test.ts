@@ -9,6 +9,7 @@ import { invalid_dashboard } from "../../../data/dashboards/dashboard-test-body.
 import _ from "lodash";
 import { errorSchema, idSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
+import { expect } from "chai";
 
 const dashboardIds: number[] = [];
 describe("[API] Dashboards - POST method", () => {
@@ -19,8 +20,8 @@ describe("[API] Dashboards - POST method", () => {
     await LoginApiSteps.loginAsAdmin();
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
-    expect(createDashboardResponse.status).toBe(STATUS_CODES.CREATED);
-    expect(createDashboardResponse.data).not.toBe(undefined);
+    expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
+    expect(createDashboardResponse.data).not.to.equal(undefined);
     validateSchema(createDashboardResponse, idSchema)
     dashboardIds.push(createDashboardResponse.data.id);
   });
@@ -29,7 +30,7 @@ describe("[API] Dashboards - POST method", () => {
     it(`Create Dashboard with invalid data - ${dashboardData.testName}`, async () => {
       const dashboard = _.omit(dashboardData, "testName")
       const createDashboardResponse = await DashboardsService.createDashboard(dashboard, config.projectName, LoggedInUsers.getToken());
-      expect(createDashboardResponse.status).toBe(STATUS_CODES.INVALID_REQUEST);
+      expect(createDashboardResponse.status).to.equal(STATUS_CODES.INVALID_REQUEST);
       validateSchema(createDashboardResponse, errorSchema)
     });
   }
@@ -37,11 +38,11 @@ describe("[API] Dashboards - POST method", () => {
   it("Add Dashboard with not unique name", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
-    expect(createDashboardResponse.status).toBe(STATUS_CODES.CREATED);
+    expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
     dashboardIds.push(createDashboardResponse.data.id);
 
     const createNotUniqueDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
-    expect(createNotUniqueDashboardResponse.status).toBe(STATUS_CODES.ALREADY_EXISTS);
+    expect(createNotUniqueDashboardResponse.status).to.equal(STATUS_CODES.ALREADY_EXISTS);
     validateSchema(createNotUniqueDashboardResponse, errorSchema)
   })
 
