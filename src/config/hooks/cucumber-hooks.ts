@@ -1,7 +1,6 @@
 import { HookFunctionExtension } from "@wdio/cucumber-framework/build/types";
-import { LoggerFactory } from '../../utils/logger/loggerWrapper.js';
+import Logger from '../../utils/logger/logger.js';
 
-const Logger = LoggerFactory.getLogger()
 
 export const cucumber_hooks: HookFunctionExtension =  {
   /**

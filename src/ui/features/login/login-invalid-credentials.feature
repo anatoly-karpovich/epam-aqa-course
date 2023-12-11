@@ -2,6 +2,7 @@
 Feature: Login
 
   Scenario Outline: Login witn invalid credentials
+    Given I open Report Portal
     When I enter "<login>" in "Login input" on "Login" page
     And I enter "<password>" in "Password input" on "Login" page
     And I click on "Login button" on "Login" page

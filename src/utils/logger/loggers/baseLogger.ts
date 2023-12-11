@@ -1,9 +1,10 @@
 import _ from "lodash";
+import { BaseReporter } from "../../reporter/baseReporter";
 
 export abstract class Logger {
   protected logArray: string[] = [];
   private static instance: Logger;
-  constructor() {
+  constructor(protected ReporterServise: BaseReporter) {
     if (Logger.instance) {
       return Logger.instance;
     }
@@ -12,9 +13,9 @@ export abstract class Logger {
 
   log(message: string, logLevel?: logLevels): void {}
   sendLogsToReport(): void {}
-  clearLog(): void {
-    _.remove(this.logArray);
-  }
+  logApiRequest(requestInfo: string): void {}
+  logApiResponse(responseInfo: string, level: logLevels = "info"): void {}
+  clearLog(): void {}
 }
 
 type logLevels = "info" | "error" | "warn";

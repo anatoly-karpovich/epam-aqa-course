@@ -1,9 +1,9 @@
-import type { INewDashboardUI } from "../../types/dashboards/addNewDashboard.types.js";
+import type { INewDashboardUI } from "../../types/dashboards/dashboards.types.js";
 
 export function generateNewDashboard(dashboardValues?: Partial<INewDashboardUI>): INewDashboardUI {
   const newDashboard: INewDashboardUI = {
     name: `Epam-AQA-${Date.now()}`,
-    description: `Test description`,
+    description: `Test description ${Date.now()}`,
     ...dashboardValues,
   };
   return newDashboard;

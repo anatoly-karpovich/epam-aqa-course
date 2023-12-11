@@ -2,7 +2,6 @@ import type { Services } from '@wdio/types';
 import { rimraf } from 'rimraf';
 import { mocha_hooks } from './mocha-hooks.js';
 import { cucumber_hooks } from './cucumber-hooks.js';
-import CommonSteps from '../../ui/steps/common.steps.js';
 
 const runner_hooks = {
     mocha: mocha_hooks,
@@ -65,7 +64,6 @@ const hooks: WebdriverIO.HookFunctionExtension & Services.Hooks = {
      */
     before: async function (capabilities, specs) {
         await browser.maximizeWindow();
-        await CommonSteps.openReportPortal();
     },
     /**
      * Runs before a WebdriverIO command gets executed.

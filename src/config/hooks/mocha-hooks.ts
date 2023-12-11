@@ -1,8 +1,6 @@
 import { HookFunctionExtension } from "@wdio/cucumber-framework/build/types";
 import type { Services } from '@wdio/types';
-import { LoggerFactory } from '../../utils/logger/loggerWrapper.js';
-
-const Logger = LoggerFactory.getLogger()
+import Logger from '../../utils/logger/logger.js';
 
 
 export const mocha_hooks: HookFunctionExtension & Services.Hooks = {

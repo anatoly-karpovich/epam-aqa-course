@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
+        "rootDir": "./src",
         "moduleResolution": "node",
         "module": "ESNext",
         "target": "es2022",
@@ -21,10 +22,11 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "strictNullChecks": true
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts"   
     ],
     "exclude": [
         "node_modules"

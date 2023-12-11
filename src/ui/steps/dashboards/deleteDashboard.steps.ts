@@ -1,5 +1,5 @@
 import { NOTIFICATION_MESSAGES } from "../../../data/dashboards/dashboardsUi.js";
-import { logStep } from "../../../utils/reporter/reporter.js";
+import { logStep } from "../../../utils/reporter/decorators.js";
 import DeleteDashboardModal from "../../pages/dashboards/modals/deleteDashboard.modal.js";
 import CommonSteps from "../common.steps.js";
 

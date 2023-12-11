@@ -1,5 +1,5 @@
-import type { INewDashboardUI } from "../../../types/dashboards/addNewDashboard.types.js";
-import { logStep } from "../../../utils/reporter/reporter.js";
+import type { INewDashboardUI } from "../../../types/dashboards/dashboards.types.js";
+import { logStep } from "../../../utils/reporter/decorators.js";
 import EditDashboardModal from "../../pages/dashboards/modals/editDashboard.modal.js";
 
 class EditDashboardSteps {
