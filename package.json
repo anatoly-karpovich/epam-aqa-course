@@ -32,7 +32,7 @@
     "test:ui": "npm run test -- --suite ui",
     "test:api": "npm run test -- --suite api",
     "test:cucumber-run": "cross-env TEST_RUNNER=cucumber npm run test -- --cucumberOpts.tags='@run'",
-    "test-mocha-mocha-api": "rimraf src/report/allure-results && npm run build && mocha --config .mocharc.json",
+    "mocha-api": "rimraf src/report/allure-results && npm run build && mocha --config .mocharc.json",
     "test:mocha-api": "cross-env FRAMEWORK=mocha npm run mocha-api",
     "build": "rimraf dist && npx tsc",
     "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",

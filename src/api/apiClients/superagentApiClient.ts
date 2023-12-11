@@ -12,7 +12,8 @@ class SuperagentApiClient extends BaseApiClient {
   }
 
   protected async send() {
-    return await this.request;
+    const response = await this.request;
+    return response
   }
 
   protected transformRequestOptions(): void {
@@ -31,12 +32,12 @@ class SuperagentApiClient extends BaseApiClient {
     }
   }
   protected transformResponse(): void {
-    const transormedResponse = {
+    const transformedResponse = {
       data: this.response.body,
       status: this.response.statusCode,
       headers: this.response.headers,
     };
-    this.response = transormedResponse;
+    this.response = transformedResponse;
   }
 
   protected logError(error: any): void {

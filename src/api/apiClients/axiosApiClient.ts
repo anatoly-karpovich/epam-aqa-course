@@ -10,7 +10,8 @@ class AxiosApiClient extends BaseApiClient {
   }
 
   protected async send() {
-    return await this.request(this.options as AxiosRequestConfig)
+    const response = await this.request(this.options as AxiosRequestConfig)
+    return response
   }
 
   protected transformRequestOptions() {
@@ -31,12 +32,12 @@ class AxiosApiClient extends BaseApiClient {
   }
 
   protected transformResponse() {
-    const transormedResponse = {
+    const transformedResponse = {
       data: this.response.data,
       status: this.response.status,
       headers: this.response.headers,
     };
-    this.response = transormedResponse
+    this.response = transformedResponse
   }
   
   protected logError(error: any) {

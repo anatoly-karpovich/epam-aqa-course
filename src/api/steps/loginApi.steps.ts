@@ -18,7 +18,8 @@ class LoginApiSteps {
 
   @logStep("Sign in as admin via API")
   async loginAsAdmin() {
-    return await this.login({username: config.credentials.username, password: config.credentials.password})
+    const loginResponse = await this.login({username: config.credentials.username, password: config.credentials.password})
+    return loginResponse
   }
 }
 
