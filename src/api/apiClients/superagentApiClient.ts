@@ -12,8 +12,7 @@ class SuperagentApiClient extends BaseApiClient {
   }
 
   protected async send() {
-    const response = await this.request;
-    return response
+    return this.request;
   }
 
   protected transformRequestOptions(): void {

@@ -10,8 +10,7 @@ class AxiosApiClient extends BaseApiClient {
   }
 
   protected async send() {
-    const response = await this.request(this.options as AxiosRequestConfig)
-    return response
+    return this.request(this.options as AxiosRequestConfig)
   }
 
   protected transformRequestOptions() {

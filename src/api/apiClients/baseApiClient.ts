@@ -50,17 +50,14 @@ export abstract class BaseApiClient {
       if (!this.options) throw new Error(`Request options were not provided`);
       this.createRequestInstance();
       this.transformRequestOptions();
-      try {
-        this.response = await this.send();
-      } catch (error: any) {
-        this.response = error.response;
-        this.logError(error);
-      }
+      this.response = await this.send();
+    } catch (error: any) {
+      if (error.response) this.logError(error);
+      throw new Error(`Failed to send request. Reason:\n ${(error as Error).message}`, { cause: error })
+    } finally {
       this.transformResponse();
       this.secureCheck();
       this.logRequest();
-    } catch(error: unknown) {
-      throw new Error(`Failed to send request. Reason:\n ${(error as Error).message}`, {cause: error})
     }
     return this.response;
   }
