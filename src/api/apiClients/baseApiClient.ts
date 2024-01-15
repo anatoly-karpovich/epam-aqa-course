@@ -27,7 +27,7 @@ export abstract class BaseApiClient {
   /**
    * Sends request with provided options
    */
-  protected abstract send(): Promise<object>
+  protected abstract send(): Promise<object>;
 
   /**
    * Logs api errors to console
@@ -42,7 +42,7 @@ export abstract class BaseApiClient {
   /**
    * Sends request with provided request IRequestOptions and returns response as IResponse interface
    * @param initOptions Request options like url, method and etc from IRequestOptions interface
-   * @returns 
+   * @returns
    */
   async sendRequest<T>(initOptions: IRequestOptions): Promise<IResponse<T>> {
     try {
@@ -51,11 +51,14 @@ export abstract class BaseApiClient {
       this.createRequestInstance();
       this.transformRequestOptions();
       this.response = await this.send();
+      this.transformResponse();
     } catch (error: any) {
       if (error.response) this.logError(error);
-      throw new Error(`Failed to send request. Reason:\n ${(error as Error).message}`, { cause: error })
-    } finally {
       this.transformResponse();
+      if (this.response.status >= 500) {
+        throw new Error(`Failed to send request. Reason:\n ${(error as Error).message}`, { cause: error });
+      }
+    } finally {
       this.secureCheck();
       this.logRequest();
     }

@@ -11,7 +11,6 @@ import { generateUpdateDashboardResponse } from "../../../data/dashboards/respon
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
 import { errorSchema, messageSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { expect } from "chai";
-import { describe, test, beforeEach, afterEach } from "@jest/globals";
 
 const dashboardIds: number[] = [];
 
@@ -24,7 +23,7 @@ describe("[API] Dashboards - PUT method", () => {
     dashboardIds.push(createDashboardResponse.data.id);
   });
 
-  test("Update Dashboard with valid data", async () => {
+  it("Update Dashboard with valid data", async () => {
     const dashboardData = generateNewDashboard();
     const dashboardId = dashboardIds[dashboardIds.length - 1];
     const updatedDashboardResponse = await DashboardsService.updateDashboard(dashboardData, dashboardId, config.projectName, LoggedInUsers.getToken());
@@ -35,7 +34,7 @@ describe("[API] Dashboards - PUT method", () => {
   });
 
   for (const dashboardData of invalid_dashboard) {
-    test(`Update Dashboard with invalid data - ${dashboardData.testName}`, async () => {
+    it(`Update Dashboard with invalid data - ${dashboardData.testName}`, async () => {
       const dashboard = _.omit(dashboardData, "testName");
       const dashboardId = dashboardIds[dashboardIds.length - 1];
       const updatedDashboardResponse = await DashboardsService.updateDashboard(dashboard, dashboardId, config.projectName, LoggedInUsers.getToken());
@@ -43,7 +42,7 @@ describe("[API] Dashboards - PUT method", () => {
       validateSchema(updatedDashboardResponse, errorSchema);
     });
 
-    test("Update not existing Dashboard", async () => {
+    it("Update not existing Dashboard", async () => {
       const dashboardId = dashboardIds[0];
       await DashboardApiSteps.deleteDashboard(dashboardId);
 

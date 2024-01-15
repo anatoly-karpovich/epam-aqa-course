@@ -1,6 +1,8 @@
 node_modules
 allure-results
 allure-report
+src/report/playwright-results
+playwright-results
 dist
 .env
 .vscode

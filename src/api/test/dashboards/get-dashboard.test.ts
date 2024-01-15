@@ -9,7 +9,6 @@ import { validateSchema } from "../../../utils/validations/validate-json-schema.
 import { allDashboardsSchema, dashboardSchema } from "../../../data/json-schemas.ts/dashboard.schema.js";
 import { errorSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { expect } from "chai";
-import { describe, test, beforeEach, afterEach } from "@jest/globals";
 
 const dashboardIds: number[] = [];
 
@@ -18,7 +17,7 @@ describe("[API] Dashboards - GET method", () => {
     await LoginApiSteps.loginAsAdmin();
   });
 
-  test("Get existing dashboard", async () => {
+  it("Get existing dashboard", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
@@ -31,7 +30,7 @@ describe("[API] Dashboards - GET method", () => {
     validateSchema(getDashboardResponse, dashboardSchema);
   });
 
-  test("Get all dashboards", async () => {
+  it("Get all dashboards", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
@@ -45,7 +44,7 @@ describe("[API] Dashboards - GET method", () => {
     validateSchema(getDashboardResponse, allDashboardsSchema);
   });
 
-  test("Get not existing dashboard", async () => {
+  it("Get not existing dashboard", async () => {
     const getDashboardResponse = await DashboardsService.getDashboardById(config.projectName, 0, LoggedInUsers.getToken());
     expect(getDashboardResponse.status).to.equal(STATUS_CODES.NOT_FOUND);
     validateSchema(getDashboardResponse, errorSchema);

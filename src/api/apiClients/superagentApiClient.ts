@@ -16,7 +16,7 @@ class SuperagentApiClient extends BaseApiClient {
   }
 
   protected transformRequestOptions(): void {
-    if(!this.options) throw new Error(`Request options were not provided`);
+    if (!this.options) throw new Error(`Request options were not provided`);
     if (this.options.headers) this.request.set(this.options.headers);
 
     if (this.options.requestType === "json") {

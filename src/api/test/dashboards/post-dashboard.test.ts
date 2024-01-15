@@ -10,13 +10,12 @@ import _ from "lodash";
 import { errorSchema, idSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
 import { expect } from "chai";
-import { describe, test, beforeEach, afterEach } from "@jest/globals";
 
 const dashboardIds: number[] = [];
 describe("[API] Dashboards - POST method", () => {
   beforeEach(async () => {});
 
-  test("Create Dashboard with valid data", async () => {
+  it("Create Dashboard with valid data", async () => {
     await LoginApiSteps.loginAsAdmin();
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
@@ -27,7 +26,7 @@ describe("[API] Dashboards - POST method", () => {
   });
 
   for (const dashboardData of invalid_dashboard) {
-    test(`Create Dashboard with invalid data - ${dashboardData.testName}`, async () => {
+    it(`Create Dashboard with invalid data - ${dashboardData.testName}`, async () => {
       const dashboard = _.omit(dashboardData, "testName");
       const createDashboardResponse = await DashboardsService.createDashboard(dashboard, config.projectName, LoggedInUsers.getToken());
       expect(createDashboardResponse.status).to.equal(STATUS_CODES.INVALID_REQUEST);
@@ -35,7 +34,7 @@ describe("[API] Dashboards - POST method", () => {
     });
   }
 
-  test("Add Dashboard with not unique name", async () => {
+  it("Add Dashboard with not unique name", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);

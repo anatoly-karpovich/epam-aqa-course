@@ -9,7 +9,6 @@ import { generateDeleteDashboardResponse } from "../../../data/dashboards/respon
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
 import { errorSchema, messageSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { expect } from "chai";
-import { describe, test, beforeEach } from "@jest/globals";
 
 const dashboardIds: number[] = [];
 describe("[API] Dashboards - DELETE method", () => {
@@ -22,7 +21,7 @@ describe("[API] Dashboards - DELETE method", () => {
     dashboardIds.push(createDashboardResponse.data.id);
   });
 
-  test("Delete existing Dashboard", async () => {
+  it("Delete existing Dashboard", async () => {
     const dashboardId = dashboardIds[dashboardIds.length - 1];
     const deleteDashboardResponse = await DashboardsService.deleteDashboard(config.projectName, dashboardId, LoggedInUsers.getToken());
     expect(deleteDashboardResponse.status).to.equal(STATUS_CODES.OK);
@@ -31,7 +30,7 @@ describe("[API] Dashboards - DELETE method", () => {
     validateSchema(deleteDashboardResponse, messageSchema);
   });
 
-  test("Delete not existing Dashboard", async () => {
+  it("Delete not existing Dashboard", async () => {
     const dashboardId = dashboardIds[dashboardIds.length - 1];
     const deleteDashboardResponse = await DashboardsService.deleteDashboard(config.projectName, dashboardId, LoggedInUsers.getToken());
     expect(deleteDashboardResponse.status).to.equal(STATUS_CODES.NOT_FOUND);
