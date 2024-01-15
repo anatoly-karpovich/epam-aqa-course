@@ -1,22 +1,11 @@
-import Logger from "../../utils/logger/logger.js";
-import { logStep } from "../../utils/reporter/decorators.js";
-import { hideSecretData } from "../../utils/string/index.js";
-import { DEFAULT_TIMEOUT } from "../../utils/timeouts/timeouts.js";
+import type { IBaseActions, SetValueContext } from "../../../types/core/actions/baseActions.js";
+import Logger from "../../../utils/logger/logger.js";
+import { logStep } from "../../../utils/reporter/decorators.js";
+import { hideSecretData } from "../../../utils/string/index.js";
+import { DEFAULT_TIMEOUT } from "../../../utils/timeouts/timeouts.js";
+import baseSelectors from "./baseSelectors.js";
 
-
-type SetValueContext = {
-  isSecretValue: boolean;
-};
-
-export class BasePage {
-  get ["Notification message"]() {
-    return (notificationText?: string) => (notificationText ? `//div[@id="notification-root"]//p[text()="${notificationText}"]` : `div#notification-root p`);
-  }
-
-  get ["Spinner"]() {
-    return `div.spinningPreloader__spinning-preloader--iC5Pz`;
-  }
-
+export class WdioActions implements IBaseActions {
   async findElement(selector: string) {
     const element = await $(selector);
     return element;
@@ -27,7 +16,7 @@ export class BasePage {
     return elements;
   }
 
-  async waitForElement(selector: string, reverse = false, timeout = DEFAULT_TIMEOUT) {
+  async waitForElement(selector: string, reverse = false, timeout = DEFAULT_TIMEOUT): Promise<WebdriverIO.Element> {
     const element = await this.findElement(selector);
     await element.waitForDisplayed({
       timeout,
@@ -43,6 +32,8 @@ export class BasePage {
       await element.waitForExist({ timeout });
       await element.scrollIntoView({ block: "center" });
       await element.waitForClickable({ timeout });
+      const isScrolled = this.isDisplayedInViewport(selector, timeout);
+      expect(isScrolled).toBe(true);
       Logger.log(`Successfully scrolled to element with selector ${selector}`);
       return element;
     } catch (error) {
@@ -50,6 +41,7 @@ export class BasePage {
       throw error;
     }
   }
+
   @logStep("Click on element with selector {selector}")
   async click(selector: string, timeout?: number) {
     try {
@@ -74,20 +66,6 @@ export class BasePage {
       }
     } catch (error) {
       Logger.log(`Failed to set "${context?.isSecretValue ? hideSecretData(text) : text}" into element with selector ${selector}`, "error");
-      throw error;
-    }
-  }
-
-  @logStep("Add {text} into element with selector {selector}")
-  async addValue(selector: string, text: string, context: SetValueContext = { isSecretValue: false }, timeout?: number) {
-    try {
-      const element = await this.waitForElementAndScroll(selector, timeout);
-      if (element) {
-        await element.addValue(text);
-        Logger.log(`Successfully added "${context?.isSecretValue ? hideSecretData(text) : text}" into element with selector ${selector}`);
-      }
-    } catch (error) {
-      Logger.log(`Failed to add "${context?.isSecretValue ? hideSecretData(text) : text}" into element with selector ${selector}`, "error");
       throw error;
     }
   }
@@ -122,17 +100,29 @@ export class BasePage {
     }
   }
 
+  async hoverElement(selector: string, timeout?: number) {
+    const element = await this.waitForElementAndScroll(selector, timeout);
+    await element.moveTo();
+  }
+
+  async dragAndDrop(elementSelector: string, targetSelector: string, timeout?: number) {
+    const sourceElement = await this.waitForElementAndScroll(elementSelector, timeout);
+    const targetElement = await this.waitForElementAndScroll(targetSelector, timeout);
+
+    await sourceElement.dragAndDrop(targetElement);
+  }
+
   async checkNotificationWithText(text: string) {
     let expectedNotification: WebdriverIO.Element | undefined;
-    return await browser.waitUntil(
+    await browser.waitUntil(
       async () => {
-        const notifications = await this.findElementArray(this["Notification message"]());
+        const notifications = await this.findElementArray(baseSelectors["Notification message"]());
         for (const n of notifications) {
           let actualText = await n.getText();
           if (text === actualText) {
             expectedNotification = n;
             await n.click();
-            await n.waitForDisplayed({ reverse: true })
+            await n.waitForDisplayed({ reverse: true });
             break;
           }
         }
@@ -163,5 +153,11 @@ export class BasePage {
       },
       { timeout }
     );
+  }
+
+  async isDisplayedInViewport(selector: string, timeout = DEFAULT_TIMEOUT) {
+    const element = await this.findElement(selector);
+    const isScrolledIntoView = await element.isDisplayedInViewport();
+    return isScrolledIntoView;
   }
 }

@@ -1,4 +1,4 @@
-import { BasePage } from "../basePage.page.js";
+import { BasePage } from "../basePage/basePage.page.js";
 import UserModalModal from "./modal/userModal.modal.js";
 
 class SideBarPage extends BasePage {

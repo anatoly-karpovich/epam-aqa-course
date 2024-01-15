@@ -9,15 +9,16 @@ import { validateSchema } from "../../../utils/validations/validate-json-schema.
 import { allDashboardsSchema, dashboardSchema } from "../../../data/json-schemas.ts/dashboard.schema.js";
 import { errorSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { expect } from "chai";
+import { describe, test, beforeEach, afterEach } from "@jest/globals";
 
 const dashboardIds: number[] = [];
 
 describe("[API] Dashboards - GET method", () => {
-  before(async () => {
+  beforeEach(async () => {
     await LoginApiSteps.loginAsAdmin();
   });
 
-  it("Get existing dashboard", async () => {
+  test("Get existing dashboard", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
@@ -27,10 +28,10 @@ describe("[API] Dashboards - GET method", () => {
     const getDashboardResponse = await DashboardsService.getDashboardById(config.projectName, dashboardId, LoggedInUsers.getToken());
     expect(getDashboardResponse.status).to.equal(200);
     expect(createDashboardResponse.data).not.to.equal(undefined);
-    validateSchema(getDashboardResponse, dashboardSchema)
+    validateSchema(getDashboardResponse, dashboardSchema);
   });
 
-  it("Get all dashboards", async () => {
+  test("Get all dashboards", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
@@ -41,13 +42,13 @@ describe("[API] Dashboards - GET method", () => {
     expect(getDashboardResponse.status).to.equal(STATUS_CODES.OK);
     expect(createDashboardResponse.data).not.to.equal(undefined);
     expect(getDashboardResponse.data.content.length).to.be.greaterThan(0);
-    validateSchema(getDashboardResponse, allDashboardsSchema)
+    validateSchema(getDashboardResponse, allDashboardsSchema);
   });
 
-  it("Get not existing dashboard", async () => {
+  test("Get not existing dashboard", async () => {
     const getDashboardResponse = await DashboardsService.getDashboardById(config.projectName, 0, LoggedInUsers.getToken());
     expect(getDashboardResponse.status).to.equal(STATUS_CODES.NOT_FOUND);
-    validateSchema(getDashboardResponse, errorSchema)
+    validateSchema(getDashboardResponse, errorSchema);
   });
 
   afterEach(async () => {

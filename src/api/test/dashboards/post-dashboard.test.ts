@@ -10,32 +10,32 @@ import _ from "lodash";
 import { errorSchema, idSchema } from "../../../data/json-schemas.ts/common.shema.js";
 import { validateSchema } from "../../../utils/validations/validate-json-schema.js";
 import { expect } from "chai";
+import { describe, test, beforeEach, afterEach } from "@jest/globals";
 
 const dashboardIds: number[] = [];
 describe("[API] Dashboards - POST method", () => {
-  before(async () => {
-  });
+  beforeEach(async () => {});
 
-  it("Create Dashboard with valid data", async () => {
+  test("Create Dashboard with valid data", async () => {
     await LoginApiSteps.loginAsAdmin();
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
     expect(createDashboardResponse.data).not.to.equal(undefined);
-    validateSchema(createDashboardResponse, idSchema)
+    validateSchema(createDashboardResponse, idSchema);
     dashboardIds.push(createDashboardResponse.data.id);
   });
 
   for (const dashboardData of invalid_dashboard) {
-    it(`Create Dashboard with invalid data - ${dashboardData.testName}`, async () => {
-      const dashboard = _.omit(dashboardData, "testName")
+    test(`Create Dashboard with invalid data - ${dashboardData.testName}`, async () => {
+      const dashboard = _.omit(dashboardData, "testName");
       const createDashboardResponse = await DashboardsService.createDashboard(dashboard, config.projectName, LoggedInUsers.getToken());
       expect(createDashboardResponse.status).to.equal(STATUS_CODES.INVALID_REQUEST);
-      validateSchema(createDashboardResponse, errorSchema)
+      validateSchema(createDashboardResponse, errorSchema);
     });
   }
 
-  it("Add Dashboard with not unique name", async () => {
+  test("Add Dashboard with not unique name", async () => {
     const dashboardData = generateNewDashboard();
     const createDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createDashboardResponse.status).to.equal(STATUS_CODES.CREATED);
@@ -43,8 +43,8 @@ describe("[API] Dashboards - POST method", () => {
 
     const createNotUniqueDashboardResponse = await DashboardsService.createDashboard(dashboardData, config.projectName, LoggedInUsers.getToken());
     expect(createNotUniqueDashboardResponse.status).to.equal(STATUS_CODES.ALREADY_EXISTS);
-    validateSchema(createNotUniqueDashboardResponse, errorSchema)
-  })
+    validateSchema(createNotUniqueDashboardResponse, errorSchema);
+  });
 
   afterEach(async () => {
     if (dashboardIds.length) {

@@ -1,4 +1,4 @@
-import { BasePage } from "../basePage.page.js";
+import { BasePage } from "../basePage/basePage.page.js";
 
 export class DashboardsPage extends BasePage {
   get ["Add New Dashboard button"]() {
