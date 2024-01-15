@@ -8,6 +8,11 @@ export type PageContext = {
   page: Page;
 };
 
+export type ResizeCoordinates = {
+  xOffset: number;
+  yOffset: number;
+};
+
 export interface IBaseActions {
   waitForElement: (selector: string, reverse: boolean, timeout?: number, pageContext?: PageContext) => Promise<object>;
   waitForElementAndScroll: (selector: string, timeout?: number, pageContext?: PageContext) => Promise<object>;
@@ -21,6 +26,8 @@ export interface IBaseActions {
   waitForElementsArrayToBeDisplayed: (selector: string, reverse?: boolean, timeout?: number, pageContext?: PageContext) => Promise<void>;
   hoverElement: (selector: string, timeout?: number, pageContext?: PageContext) => Promise<void>;
   dragAndDrop: (elementSelector: string, targetSelector: string, timeout?: number, pageContext?: PageContext) => Promise<void>;
+  resizeElement: (selector: string, resizeCoordinates: ResizeCoordinates, timeout?: number, pageContext?: PageContext) => Promise<void>;
+  interceptResponse: (url: string, triggerAction?: () => Promise<void>) => Promise<object>;
 }
 
 export interface IWaitUntilOptions {

@@ -1,4 +1,4 @@
-import type { IBaseActions, IWaitUntilOptions, SetValueContext } from "../../../types/core/actions/baseActions.js";
+import type { IBaseActions, IWaitUntilOptions, PageContext, ResizeCoordinates, SetValueContext } from "../../../types/core/actions/baseActions.js";
 import Logger from "../../../utils/logger/logger.js";
 import { hideSecretData } from "../../../utils/string/index.js";
 import { DEFAULT_TIMEOUT, TIMEOUT_10_SEC } from "../../../utils/timeouts/timeouts.js";
@@ -123,6 +123,40 @@ export class PlaywrightActions implements IBaseActions {
     const sourceElement = await this.waitForElementAndScroll(elementSelector, timeout);
     const targetElement = await this.waitForElementAndScroll(targetSelector, timeout);
     await sourceElement.dragTo(targetElement, { timeout });
+  }
+
+  async resizeElement(selector: string, coordinates: ResizeCoordinates, timeout?: number, pageContext?: PageContext) {
+    const element = await this.waitForElementAndScroll(selector);
+    const page = this.playwrightSetup.getPage();
+
+    await page.waitForTimeout(1000);
+    const boundingBox = await element.boundingBox();
+    if (boundingBox) {
+      const rightDownX = boundingBox.x + boundingBox.width - 3;
+      const rightDownY = boundingBox.y + boundingBox.height - 3;
+
+      // Move the mouse to the bottom-right corner
+      await page.mouse.move(rightDownX, rightDownY);
+
+      // Press the mouse button to start resizing
+      await page.mouse.down();
+
+      // Move the mouse to the new coordinates to resize the element
+      await page.mouse.move(rightDownX + coordinates.xOffset, rightDownY + coordinates.yOffset);
+
+      // Release the mouse button to finish resizing
+      await page.mouse.up();
+    }
+  }
+
+  async interceptResponse(url: string, triggerAction?: () => Promise<void>) {
+    const page = this.playwrightSetup.getPage();
+    if (triggerAction) {
+      const [, response] = await Promise.all([triggerAction(), page.waitForResponse(url)]);
+      return response;
+    }
+    const response = await page.waitForResponse(url);
+    return response;
   }
 
   async checkNotificationWithText(text: string) {

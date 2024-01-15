@@ -1,4 +1,4 @@
-import { IBaseActions } from "../../../types/core/actions/baseActions.js";
+import { IBaseActions, ResizeCoordinates } from "../../../types/core/actions/baseActions.js";
 import { logStep } from "../../../utils/reporter/decorators.js";
 import { DEFAULT_TIMEOUT } from "../../../utils/timeouts/timeouts.js";
 import actionsStrategy from "./actions.js";
@@ -62,6 +62,15 @@ export class BasePage implements IBaseActions {
 
   async dragAndDrop(elementSelector: string, targetSelector: string, timeout?: number) {
     await this.actionsStrategy.dragAndDrop(elementSelector, targetSelector, timeout);
+  }
+
+  async resizeElement(selector: string, coordinates: ResizeCoordinates, timeout?: number) {
+    await this.actionsStrategy.resizeElement(selector, coordinates, timeout);
+  }
+
+  async interceptResponse(url: string, triggerAction?: () => Promise<void>) {
+    const response = await this.actionsStrategy.interceptResponse(url, triggerAction);
+    return response;
   }
 
   async checkNotificationWithText(text: string) {

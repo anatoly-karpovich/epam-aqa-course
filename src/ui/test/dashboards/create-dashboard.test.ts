@@ -5,17 +5,18 @@ import { generateNewDashboard } from "../../../data/dashboards/dashboardsUi.js";
 import SidebarSteps from "../../steps/sidebar.steps.js";
 import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.js";
 import CommonSteps from "../../steps/common.steps.js";
+import AddNewDashboardModal from "../../pages/dashboards/modals/addNewDashboard.modal.js";
 
 describe("[UI] Create Dashboard", () => {
   beforeEach(async () => {
-    await CommonSteps.openReportPortal()
+    await CommonSteps.openReportPortal();
     await LoginSteps.login();
   });
 
   it("Create dashboard with smoke data", async () => {
-
     await AllDashboardsSteps.openAddNewDashboardModal();
     const dashboard = generateNewDashboard();
+    await AddNewDashboardModal.resizeElement(AddNewDashboardModal["Dashboard Description input"], { xOffset: 0, yOffset: 100 });
     await AddNewDashboardSteps.submitNewDashboard(dashboard);
     const pageTitle = await DashboardDetailsPage.getText(DashboardDetailsPage.Title);
     expect(pageTitle).toBe(dashboard.name.toUpperCase());

@@ -15,7 +15,7 @@ dotenv.config();
 export default defineConfig({
   // globalSetup: require.resolve("../utils/playwright/globalSetup.js"),
   // globalTeardown: require.resolve("../utils/playwright/globalTeardown.js"),
-  testDir: "../ui/test/pw",
+  testDir: "../ui/test/playwright",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

@@ -1,4 +1,4 @@
-import type { IBaseActions, SetValueContext } from "../../../types/core/actions/baseActions.js";
+import type { IBaseActions, PageContext, ResizeCoordinates, SetValueContext } from "../../../types/core/actions/baseActions.js";
 import Logger from "../../../utils/logger/logger.js";
 import { logStep } from "../../../utils/reporter/decorators.js";
 import { hideSecretData } from "../../../utils/string/index.js";
@@ -32,7 +32,7 @@ export class WdioActions implements IBaseActions {
       await element.waitForExist({ timeout });
       await element.scrollIntoView({ block: "center" });
       await element.waitForClickable({ timeout });
-      const isScrolled = this.isDisplayedInViewport(selector, timeout);
+      const isScrolled = await this.isDisplayedInViewport(selector, timeout);
       expect(isScrolled).toBe(true);
       Logger.log(`Successfully scrolled to element with selector ${selector}`);
       return element;
@@ -110,6 +110,41 @@ export class WdioActions implements IBaseActions {
     const targetElement = await this.waitForElementAndScroll(targetSelector, timeout);
 
     await sourceElement.dragAndDrop(targetElement);
+  }
+
+  async resizeElement(selector: string, coordinates: ResizeCoordinates, timeout?: number, pageContext?: PageContext) {
+    const element = await this.waitForElement(selector, false, timeout);
+    // Get the location of the element
+    const location = await element.getLocation();
+
+    // Get the size of the element
+    const size = await element.getSize();
+
+    const rightDownX = Math.floor(location.x + size.width) - 3;
+    const rightDownY = Math.floor(location.y + size.height * 2) - 3;
+
+    //Need waiter for modals to finish appearing with CSS
+    await browser.pause(1000);
+    await browser.performActions([
+      {
+        type: "pointer",
+        id: "mouse",
+        parameters: { pointerType: "mouse" },
+        actions: [
+          { type: "pointerMove", x: rightDownX, y: rightDownY },
+          { type: "pointerDown", button: 0, origin: selector },
+          { type: "pointerMove", x: rightDownX + coordinates.xOffset, y: rightDownY + coordinates.yOffset },
+          { type: "pointerUp", button: 0, origin: selector },
+        ],
+      },
+    ]);
+  }
+
+  async interceptResponse(url: string, triggerAction?: () => Promise<void>) {
+    //TODO: TBD
+    return {
+      status: 200,
+    };
   }
 
   async checkNotificationWithText(text: string) {

@@ -1,4 +1,4 @@
-import config from "../../config/config.js";
+import config from "../../config/environment.js";
 import type { IRequestOptions, IResponse } from "../../types/api/apiClient.types.js";
 import type { ICredentials, ILoginResponse } from "../../types/login.types.js";
 import apiClient from "../apiClients/apiClient.js";
@@ -11,13 +11,13 @@ class LoginService {
       baseURL: apiConfig.baseURL,
       url: apiConfig.endpoints.Token,
       headers: {
-        Authorization: config.LoginAuthorizationHeader
+        Authorization: config.LoginAuthorizationHeader,
       },
-      data: { ...credentials, grant_type : 'password' },
-      requestType: "formData"
+      data: { ...credentials, grant_type: "password" },
+      requestType: "formData",
     };
-    return apiClient.sendRequest<ILoginResponse>(options)
+    return apiClient.sendRequest<ILoginResponse>(options);
   }
 }
 
-export default new LoginService()
+export default new LoginService();

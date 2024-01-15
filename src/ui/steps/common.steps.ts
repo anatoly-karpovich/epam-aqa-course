@@ -1,6 +1,6 @@
 import { logStep } from "../../utils/reporter/decorators.js";
 import LoginPage from "../pages/login.page.js";
-import conf from "../../config/config.js";
+import conf from "../../config/environment.js";
 import { NOTIFICATION_MESSAGES } from "../../data/dashboards/dashboardsUi.js";
 import type { PageContext } from "../../types/core/actions/baseActions.js";
 import { PlaywightSetup } from "../../utils/playwight/playwightSetup.js";

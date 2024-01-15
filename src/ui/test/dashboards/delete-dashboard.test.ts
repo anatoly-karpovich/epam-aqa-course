@@ -11,7 +11,7 @@ describe("[UI] Delete Dashboard", () => {
   let dashboard = generateNewDashboard();
 
   beforeEach(async () => {
-    await CommonSteps.openReportPortal()
+    await CommonSteps.openReportPortal();
     await LoginSteps.login();
     await AllDashboardsSteps.openAddNewDashboardModal();
     await AddNewDashboardSteps.submitNewDashboard(dashboard);

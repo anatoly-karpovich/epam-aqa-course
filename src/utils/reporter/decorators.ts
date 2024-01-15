@@ -6,10 +6,11 @@ import { IRequestOptions, IResponse } from "../../types/api/apiClient.types.js";
 import fieldsToHideInReport from "../../data/fieldsToHideInReport.js";
 import _ from "lodash";
 import { hideValueInObject } from "../object/index.js";
+import ENVIRONMENT from "../../config/environment.js";
 
 export function logStep(stepName: string): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    if (descriptor && process.env.FRAMEWORK === "wdio") {
+    if (descriptor && ENVIRONMENT.FRAMEWORK === "wdio") {
       const originalMethod = descriptor?.value;
       descriptor.value = async function (...args: any[]) {
         const selector = args[0]; // Extract the selector from the arguments
