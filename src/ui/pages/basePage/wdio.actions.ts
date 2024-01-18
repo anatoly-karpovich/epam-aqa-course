@@ -109,11 +109,30 @@ export class WdioActions implements IBaseActions {
     const sourceElement = await this.waitForElementAndScroll(elementSelector, timeout);
     const targetElement = await this.waitForElementAndScroll(targetSelector, timeout);
 
-    await sourceElement.dragAndDrop(targetElement);
+    const sourceLocation = await sourceElement.getLocation();
+    const targetLocation = await targetElement.getLocation();
+
+    await browser.performActions([
+      {
+        type: "pointer",
+        id: "mouse",
+        parameters: { pointerType: "mouse" },
+        actions: [
+          { type: "pointerMove", x: sourceLocation.x + 5, y: sourceLocation.y + 5 },
+          { type: "pointerDown", button: 0, origin: elementSelector },
+          { type: "pointerMove", x: targetLocation.x, y: targetLocation.y },
+          { type: "pointerUp", button: 0 },
+        ],
+      },
+    ]);
   }
 
   async resizeElement(selector: string, coordinates: ResizeCoordinates, timeout?: number, pageContext?: PageContext) {
+    //TODO: Need waiter for modals to finish appearing with CSS
     const element = await this.waitForElement(selector, false, timeout);
+
+    await browser.pause(1000);
+
     // Get the location of the element
     const location = await element.getLocation();
 
@@ -121,10 +140,8 @@ export class WdioActions implements IBaseActions {
     const size = await element.getSize();
 
     const rightDownX = Math.floor(location.x + size.width) - 3;
-    const rightDownY = Math.floor(location.y + size.height * 2) - 3;
+    const rightDownY = Math.floor(location.y + size.height) - 3;
 
-    //Need waiter for modals to finish appearing with CSS
-    await browser.pause(1000);
     await browser.performActions([
       {
         type: "pointer",

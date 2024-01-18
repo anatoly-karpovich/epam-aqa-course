@@ -1,6 +1,8 @@
-import { When } from "@wdio/cucumber-framework"
-import LoginSteps from "../steps/login.steps.js"
+import LoginSteps from "../steps/login.steps.js";
+import cucumberMethods from "../../utils/testRunners/cucumberWrapper.js";
 
-When(/^I login as admin$/, async function() {
-    await LoginSteps.login()
-})
+const { When } = cucumberMethods;
+
+When(/^I login as admin$/, async function () {
+  await LoginSteps.login();
+});

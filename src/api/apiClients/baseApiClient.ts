@@ -54,10 +54,10 @@ export abstract class BaseApiClient {
       this.transformResponse();
     } catch (error: any) {
       if (error.response) this.logError(error);
-      this.transformResponse();
       if (this.response.status >= 500) {
         throw new Error(`Failed to send request. Reason:\n ${(error as Error).message}`, { cause: error });
       }
+      this.transformResponse();
     } finally {
       this.secureCheck();
       this.logRequest();

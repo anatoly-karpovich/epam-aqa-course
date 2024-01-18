@@ -25,6 +25,12 @@ class AddNewDashboardSteps {
   @logStep("Create new Dashboard on Add Dashboards modal")
   async submitNewDashboard(newDashboard: INewDashboardUI) {
     await this.fillInNewDashboardData(newDashboard);
+    await this.clickSaveButton();
+    await CommonSteps.skipNotificationMessage(NOTIFICATION_MESSAGES.DASHBOARD_ADDED);
+  }
+
+  async submitNewDashboardWithInterception(newDashboard: INewDashboardUI) {
+    await this.fillInNewDashboardData(newDashboard);
     if (ENVIRONMENT.FRAMEWORK === "playwright") {
       const urlPattern = apiConfig.baseURL + apiConfig.endpoints.Dashboard(ENVIRONMENT.PROJECT_NAME) + "*";
       const responsePromise = AddNewDashboardModal.interceptResponse(urlPattern, this.clickSaveButton);

@@ -6,4 +6,4 @@ const actions = {
   playwright: PlaywrightActions,
 };
 
-export default actions[process.env.FRAMEWORK || "playwright"];
+export default actions[process.env.FRAMEWORK || "wdio"];

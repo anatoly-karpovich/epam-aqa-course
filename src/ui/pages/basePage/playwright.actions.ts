@@ -108,6 +108,7 @@ export class PlaywrightActions implements IBaseActions {
     try {
       await page.goto(url);
       Logger.log(`Successfully opened url: ${url}`);
+      await page.waitForTimeout(1000);
     } catch (error) {
       Logger.log(`Failed to opened url: ${url}`, "error");
       throw error;
@@ -120,9 +121,24 @@ export class PlaywrightActions implements IBaseActions {
   }
 
   async dragAndDrop(elementSelector: string, targetSelector: string, timeout?: number) {
+    const page = this.playwrightSetup.getPage();
     const sourceElement = await this.waitForElementAndScroll(elementSelector, timeout);
     const targetElement = await this.waitForElementAndScroll(targetSelector, timeout);
-    await sourceElement.dragTo(targetElement, { timeout });
+    const sourceElementboundingBox = await sourceElement.boundingBox();
+    const targetElementboundingBox = await targetElement.boundingBox();
+    if (sourceElementboundingBox && targetElementboundingBox) {
+      // Move the mouse to the bottom-right corner
+      await page.mouse.move(sourceElementboundingBox.x + 5, sourceElementboundingBox.y + 5);
+
+      // Press the mouse button to start resizing
+      await page.mouse.down();
+
+      // Move the mouse to the new coordinates to resize the element
+      await page.mouse.move(targetElementboundingBox.x, targetElementboundingBox.y);
+
+      // Release the mouse button to finish resizing
+      await page.mouse.up();
+    }
   }
 
   async resizeElement(selector: string, coordinates: ResizeCoordinates, timeout?: number, pageContext?: PageContext) {

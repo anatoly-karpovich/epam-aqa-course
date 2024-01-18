@@ -2,10 +2,12 @@
   "name": "my-new-project",
   "type": "module",
   "devDependencies": {
+    "@cucumber/cucumber": "^9.6.0",
     "@playwright/test": "^1.40.1",
     "@types/ajv": "^1.0.0",
     "@types/axios": "^0.14.0",
     "@types/chai": "^4.3.11",
+    "@types/cucumber": "^7.0.0",
     "@types/dotenv": "^8.2.0",
     "@types/form-data": "^2.5.0",
     "@types/jasmine": "^5.1.4",
@@ -22,6 +24,7 @@
     "@wdio/mocha-framework": "^8.17.0",
     "@wdio/spec-reporter": "^8.17.0",
     "cross-env": "^7.0.3",
+    "esm": "^3.2.25",
     "jasmine": "^5.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
@@ -37,7 +40,8 @@
     "build": "rimraf dist && npx tsc",
     "report": "allure generate src/report/allure-results --clean -o src/report/allure-report",
     "report-open": "npm run report && allure open src/report/allure-report",
-    "test:pw": "cross-env FRAMEWORK=playwright npx playwright test --config=src/config/playwright.config.ts"
+    "test:pw": "cross-env FRAMEWORK=playwright npx playwright test --config=src/config/playwright.config.ts",
+    "test:pw-cucumber": "cross-env FRAMEWORK=playwright cucumber-js src/ui/features/login/login-invalid-credentials.feature --require src/ui/step-definitions/**/*.steps.ts --require cucumber.js --require src/config/cucumber.setup.ts --require-module ts-node/register --require --loader ts-node/esm"
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",

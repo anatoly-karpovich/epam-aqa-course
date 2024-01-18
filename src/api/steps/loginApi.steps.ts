@@ -2,7 +2,7 @@ import type { ICredentials } from "../../types/login.types.js";
 import LoginService from "../services/login.service.js";
 import LoggedInUsers from "../../utils/entities/loggedInUsers.js";
 import { STATUS_CODES } from "../../data/http.js";
-import config from "../../config/environment.js";
+import ENVIRONMENT from "../../config/environment.js";
 import { logStep } from "../../utils/reporter/decorators.js";
 import { expect } from "chai";
 
@@ -17,7 +17,7 @@ class LoginApiSteps {
 
   @logStep("Sign in as admin via API")
   async loginAsAdmin() {
-    const loginResponse = await this.login({ username: config.credentials.username, password: config.credentials.password });
+    const loginResponse = await this.login({ username: ENVIRONMENT.credentials.username, password: ENVIRONMENT.credentials.password });
     return loginResponse;
   }
 }

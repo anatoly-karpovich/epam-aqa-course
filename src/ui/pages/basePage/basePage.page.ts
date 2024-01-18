@@ -9,7 +9,7 @@ type SetValueContext = {
 };
 
 export class BasePage implements IBaseActions {
-  actionsStrategy: IBaseActions;
+  private actionsStrategy: IBaseActions;
   constructor() {
     this.actionsStrategy = new actionsStrategy();
   }

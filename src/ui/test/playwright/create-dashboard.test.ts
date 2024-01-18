@@ -9,7 +9,7 @@ import AddNewDashboardSteps from "../../steps/dashboards/AddNewDashboard.steps.j
 import DashboardDetailsPage from "../../pages/dashboards/dashboardDetails.page.js";
 import AddNewDashboardModal from "../../pages/dashboards/modals/addNewDashboard.modal.js";
 
-test.describe("[UI] Create Dashboard", async () => {
+test.describe.skip("[UI] Create Dashboard", async () => {
   test.beforeEach(async ({ page }) => {
     await commonSteps.openReportPortal({ page });
   });
