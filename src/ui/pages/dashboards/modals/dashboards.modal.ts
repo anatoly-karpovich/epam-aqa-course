@@ -1,4 +1,4 @@
-import { BasePage } from "../../basePage.page.js";
+import { BasePage } from "../../basePage/basePage.page.js";
 
 export class DashboardsModal extends BasePage {
   constructor(public modalTitle: string) {

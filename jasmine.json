@@ -1,0 +1,9 @@
+{
+  "spec_dir": "dist",
+  "spec_files": ["api/test/**/*.test.js"],
+  "env": {
+    "stopSpecOnExpectationFailure": false,
+    "random": true
+  },
+  "requires": ["dotenv/config"]
+}

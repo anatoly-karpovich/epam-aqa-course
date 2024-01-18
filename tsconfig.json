@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
-        "rootDir": "./src",
         "moduleResolution": "node",
         "module": "ESNext",
-        "target": "es2022",
+        "target": "ESNext",
         "types": [
             "node",
             "@wdio/globals/types",
             "expect-webdriverio",
-            "@wdio/mocha-framework"
+            "@wdio/mocha-framework",
+            "@cucumber/cucumber"
         ],
         "skipLibCheck": true,
         "noEmit": false,
@@ -25,9 +25,7 @@
         "noImplicitAny": false,
         "strictNullChecks": true
     },
-    "include": [
-        "src/**/*.ts"   
-    ],
+    "include": ["src/**/*.ts", "cucumber.js"],
     "exclude": [
         "node_modules"
     ]

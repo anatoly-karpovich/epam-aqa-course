@@ -11,6 +11,12 @@ class DashboardDetailsSteps {
   async openDeleteDashboardModal() {
     await DashboardDetailsPage.click(DashboardDetailsPage["Delete button"]);
   }
+
+  async moveWidget(widgetToMove: string, widgetToBeReplaced: string) {
+    const widgetToMoveSelector = DashboardDetailsPage["Widget by Name"](widgetToMove);
+    const widgetToBeReplacedSelector = DashboardDetailsPage["Widget by Name"](widgetToBeReplaced);
+    await DashboardDetailsPage.dragAndDrop(widgetToMoveSelector, widgetToBeReplacedSelector);
+  }
 }
 
 export default new DashboardDetailsSteps();

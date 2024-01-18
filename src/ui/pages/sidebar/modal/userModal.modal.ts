@@ -1,4 +1,4 @@
-import { BasePage } from "../../basePage.page.js";
+import { BasePage } from "../../basePage/basePage.page.js";
 
 class UserMenuModal extends BasePage {
   get ["Profile button"]() {

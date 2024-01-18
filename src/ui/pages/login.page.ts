@@ -1,7 +1,7 @@
-import { BasePage } from "./basePage.page.js";
+import { BasePage } from "./basePage/basePage.page.js";
 
 class LoginPage extends BasePage {
-  uniqueElement = this["Login button"]
+  uniqueElement = this["Login button"];
   get ["Login input"]() {
     return `input[name="login"]`;
   }
