@@ -31,7 +31,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/anatoly-karpovich/epam-aqa-course'
+                git branch: 'ci', url: 'https://github.com/anatoly-karpovich/epam-aqa-course'
             }
         }
 
