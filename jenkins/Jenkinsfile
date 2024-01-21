@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+    tools { 
+        nodejs "Node" 
+        allure "Allure"
+    }
+    environment {
+        LOGIN_LOCAL="bb"
+        PASSWORD_LOCAL="aa"
+        ENVIRONMENT="web"
+        DEBUG="false"
+        URL_LOCAL="https://rp.epam.com/"
+        URL_WEB="https://rp.epam.com/"
+        TEST_RUNNER="mocha"
+        MAX_INSTANCES="5"
+        API_CLIENT="axios"
+        PROJECT_NAME="anatoly_karpovich_personal"
+        LOGGER="winston"
+        FRAMEWORK="wdio"
+        ALLURE_REPORTS_FOLDER = 'src/report/allure-report'
+    }
+    
+    triggers {
+        cron('0 0 * * *') // Run tests at midnight every day
+        pollSCM('H/30 * * * *') // Check for new commits on the main branch every 30 minutes
+    }
+
+    stages {
+        stage('Clone repository') {
+            steps {
+                git branch: 'ci', url: 'https://github.com/anatoly-karpovich/epam-aqa-course'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    bat 'npm install'
+                }
+            }
+        }
+        
+        stage('Install allure-commandline') {
+            steps {
+                script {
+                    bat 'npm install -g allure-commandline'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                        bat 'npm run test:ui'                        
+                    } catch(Exception e) {
+                        echo "Test failed, but continuing with the pipeline..."
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // archiveArtifacts "src/report/allure-report"
+            script {
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'src/report/allure-results']]
+                ])
+            }
+        }
+    }
+}

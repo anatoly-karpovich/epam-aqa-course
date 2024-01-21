@@ -31,6 +31,7 @@ const ENVIRONMENT = {
   API_CLIENT: `${process.env.API_CLIENT}`,
   PROJECT_NAME: `${process.env.PROJECT_NAME}`,
   LOGGER: `${process.env.LOGGER}`,
+  SLACK_NOTIFICATION_URL: `${process.env.SLACK_NOTIFICATION_URL}`,
 };
 
 export default ENVIRONMENT;
