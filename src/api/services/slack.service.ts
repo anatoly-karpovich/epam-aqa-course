@@ -1,12 +1,13 @@
 import { IRequestOptions } from "../../types/api/apiClient.types.js";
 import apiClient from "../apiClients/apiClient.js";
+import ENVIRONMENT from "../../config/environment.js";
 
 class SlackService {
   async postNotification(text: string) {
     const options: IRequestOptions = {
       method: "post",
       baseURL: `https://hooks.slack.com/`,
-      url: `services/T06EVE3FN3C/B06FJ7SQ12L/Iwz87vhYT4qga3CTy5A4QzME`,
+      url: ENVIRONMENT.SLACK_NOTIFICATION_URL,
       headers: {
         "Content-type": "application/json",
       },
